@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Manual Files
+EnJabonesEM_API/Web.config
+/EnJabonesEM_API/bin
+/.vs
+/EnJabonesEM_API/obj/Debug
+/packages
+/BL/obj/Debug
+/DAL/obj/Debug
+/DB_ENJABONESEM_CR/obj/Debug
+/ET/obj/Debug
