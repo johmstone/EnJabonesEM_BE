@@ -1,4 +1,4 @@
-﻿CREATE TABLE [config].[utbDeliveryAddresses]
+﻿CREATE TABLE [sal].[utbDeliveryAddresses]
 (
 	[DeliveryAddressID] INT IDENTITY(1,1) NOT NULL,
 	[UserID]			INT				NOT NULL,
@@ -11,13 +11,13 @@
     [LastModifyDate]	DATETIME		CONSTRAINT [utbDeliveryAddressesDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbDeliveryAddressesDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbDeliveryAddressID] PRIMARY KEY CLUSTERED ([DeliveryAddressID] ASC),
-    CONSTRAINT [FK.adm.utbUsers.config.utbDeliveryAddresses.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.config.utbAddresses.config.utbDeliveryAddresses.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
+    CONSTRAINT [FK.adm.utbUsers.sal.utbDeliveryAddresses.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
+	CONSTRAINT [FK.config.utbAddresses.sal.utbDeliveryAddresses.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
 );
 
 GO
-CREATE TRIGGER [config].[utrLogDeliveryAddresses] ON [config].[utbDeliveryAddresses]
-FOR INSERT
+CREATE TRIGGER [sal].[utrLogDeliveryAddresses] ON [sal].[utbDeliveryAddresses]
+FOR INSERT, UPDATE
 AS
 	BEGIN
 		DECLARE @INSERTUPDATE VARCHAR(30)
@@ -37,7 +37,7 @@ AS
 
 		INSERT INTO [adm].[utbLogActivities] ([ActivityType],[TargetTable],[SQLStatement],[StartValues],[EndValues],[User],[LogActivityDate])
 		SELECT	@INSERTUPDATE
-				,'[config].[utbDeliveryAddresses]'
+				,'[sal].[utbDeliveryAddresses]'
 				,(SELECT EventInfo FROM #DBCC)
 				,@StartValues
 				,@EndValues

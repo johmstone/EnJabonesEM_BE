@@ -1,4 +1,4 @@
-﻿CREATE TABLE [config].[utbFacturationInfo]
+﻿CREATE TABLE [sal].[utbFacturationInfo]
 (
 	[FacurationInfoID]	INT		IDENTITY(1,1)	NOT NULL,
 	[UserID]			INT			NOT NULL,
@@ -13,13 +13,13 @@
     [LastModifyDate]	DATETIME		CONSTRAINT [utbFacturationInfoDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbFacturationInfoDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbFacurationInfoID] PRIMARY KEY CLUSTERED ([FacurationInfoID] ASC),
-    CONSTRAINT [FK.adm.utbUsers.config.utbFacturationInfo.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.config.utbAddresses.config.utbFacturationInfo.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
+    CONSTRAINT [FK.adm.utbUsers.sal.utbFacturationInfo.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
+	CONSTRAINT [FK.config.utbAddresses.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
 );
 
 GO
-CREATE TRIGGER [config].[utrLogFacturationInfo] ON [config].[utbFacturationInfo]
-FOR INSERT
+CREATE TRIGGER [sal].[utrLogFacturationInfo] ON [sal].[utbFacturationInfo]
+FOR INSERT, UPDATE
 AS
 	BEGIN
 		DECLARE @INSERTUPDATE VARCHAR(30)
@@ -39,7 +39,7 @@ AS
 
 		INSERT INTO [adm].[utbLogActivities] ([ActivityType],[TargetTable],[SQLStatement],[StartValues],[EndValues],[User],[LogActivityDate])
 		SELECT	@INSERTUPDATE
-				,'[config].[utbFacturationInfo]'
+				,'[sal].[utbFacturationInfo]'
 				,(SELECT EventInfo FROM #DBCC)
 				,@StartValues
 				,@EndValues

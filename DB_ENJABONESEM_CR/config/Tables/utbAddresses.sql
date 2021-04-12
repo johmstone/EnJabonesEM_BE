@@ -17,7 +17,7 @@
 
 GO
 CREATE TRIGGER [config].[utrLogAddresses] ON [config].[utbAddresses]
-FOR INSERT
+FOR INSERT, UPDATE
 AS
 	BEGIN
 		DECLARE @INSERTUPDATE VARCHAR(30)
