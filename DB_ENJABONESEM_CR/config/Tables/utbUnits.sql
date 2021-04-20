@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [config].[utbUnits]
 (
 	[UnitID]			INT				IDENTITY(1,1) NOT NULL,
-	[Unit]				VARCHAR(50)		NOT NULL,
+	[UnitName]			VARCHAR(50)		NOT NULL,
 	[Symbol]			VARCHAR(10)		NOT NULL,
 	[InsertDate]		DATETIME		CONSTRAINT [utbUnitsDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [InsertUser]		VARCHAR(100)	CONSTRAINT [utbUnitsDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,

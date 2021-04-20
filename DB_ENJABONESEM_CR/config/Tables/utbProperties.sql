@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [config].[utbProperties]
 (
 	[PropertyID]		INT				IDENTITY(1,1) NOT NULL,
-	[Property]			VARCHAR(100)	NOT NULL,
+	[PropertyName]		VARCHAR(100)	NOT NULL,
 	[InsertDate]		DATETIME		CONSTRAINT [utbPropertiesDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbPropertiesDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,
     [LastModifyDate]	DATETIME		CONSTRAINT [utbPropertiesDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,

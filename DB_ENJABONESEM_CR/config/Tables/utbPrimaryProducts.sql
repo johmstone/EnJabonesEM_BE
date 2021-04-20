@@ -4,6 +4,7 @@
 	[Name]				VARCHAR(100)	NOT NULL,
 	[Technique]			VARCHAR(100)	NULL,
 	[PhotoURL]			VARCHAR(500)	NULL,
+	[BrochureURL]		VARCHAR(500)	NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbPrimaryProductsDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[VisibleFlag]		BIT				CONSTRAINT [utbPrimaryProductsDefaultVisibleFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[InsertDate]		DATETIME		CONSTRAINT [utbPrimaryProductsDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,

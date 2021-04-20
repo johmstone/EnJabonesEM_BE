@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [sal].[utbDeliveryMethods]
 (
 	[DeliveryID]		INT				IDENTITY(1,1) NOT NULL,
-	[DeliveryMethod]	VARCHAR(50)		NOT NULL,
+	[Method]			VARCHAR(50)		NOT NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbDeliveryMethodsDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[InsertDate]		DATETIME		CONSTRAINT [utbDeliveryMethodsDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbDeliveryMethodsDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,

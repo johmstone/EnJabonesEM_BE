@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,7 +42,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="AppDirectory.cs" />
+    <Compile Include="DeliveryAddress.cs" />
+    <Compile Include="DeliveryMethod.cs" />
+    <Compile Include="FacturatioInfo.cs" />
+    <Compile Include="Formula.cs" />
+    <Compile Include="Ingredient.cs" />
+    <Compile Include="IngredientProperty.cs" />
+    <Compile Include="IngredientType.cs" />
+    <Compile Include="IngredientUse.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderDetail.cs" />
+    <Compile Include="OrderStatus.cs" />
+    <Compile Include="PrimaryProduct.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="ResetPassword.cs" />
+    <Compile Include="RightsbyRole.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Unit.cs" />
+    <Compile Include="Use.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserToken.cs" />
+    <Compile Include="WebDirectory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

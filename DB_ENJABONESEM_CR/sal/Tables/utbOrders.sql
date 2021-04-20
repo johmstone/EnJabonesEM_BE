@@ -9,7 +9,7 @@
 	[FacurationInfoID]	INT				NOT NULL,
 	[Discount]			NUMERIC(5,2)	NOT NULL,
 	[StatusID]			INT				NOT NULL,
-	[ProofPayment]		INT				NULL,
+	[ProofPayment]		VARCHAR(50)		NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbOrdersDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[InsertDate]		DATETIME		CONSTRAINT [utbOrdersDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbOrdersDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,

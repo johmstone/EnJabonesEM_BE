@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [config].[utbIngredients]
 (
 	[IngredientID]		INT				IDENTITY(1,1) NOT NULL,
-	[Ingredient]		VARCHAR(100)	NOT NULL,
+	[IngredientName]	VARCHAR(100)	NOT NULL,
 	[TypeID]			INT				NOT NULL,
 	[PhotoURL]			VARCHAR(500)	NULL,
 	[InsertDate]		DATETIME		CONSTRAINT [utbIngredientsDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
