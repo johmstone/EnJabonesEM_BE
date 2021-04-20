@@ -56,5 +56,46 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="adm" />
+    <Folder Include="adm\Stored Procedures" />
+    <Folder Include="adm\Tables" />
+    <Folder Include="config" />
+    <Folder Include="config\Stored Procedures" />
+    <Folder Include="config\Tables" />
+    <Folder Include="sal" />
+    <Folder Include="sal\Stored Procedures" />
+    <Folder Include="sal\Tables" />
+    <Folder Include="Security" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="adm\Tables\utbAppDirectory.sql" />
+    <Build Include="adm\Tables\utbLogActivities.sql" />
+    <Build Include="adm\Tables\utbLogins.sql" />
+    <Build Include="adm\Tables\utbResetPasswords.sql" />
+    <Build Include="adm\Tables\utbRightsbyRole.sql" />
+    <Build Include="adm\Tables\utbRoles.sql" />
+    <Build Include="adm\Tables\utbUsers.sql" />
+    <Build Include="adm\Tables\utbUserTokens.sql" />
+    <Build Include="adm\Tables\utbWebDirectory.sql" />
+    <Build Include="config\Tables\utbAddresses.sql" />
+    <Build Include="config\Tables\utbFormulas.sql" />
+    <Build Include="config\Tables\utbIngredientProperties.sql" />
+    <Build Include="config\Tables\utbIngredients.sql" />
+    <Build Include="config\Tables\utbIngredientTypes.sql" />
+    <Build Include="config\Tables\utbIngredientUses.sql" />
+    <Build Include="config\Tables\utbPrimaryProducts.sql" />
+    <Build Include="config\Tables\utbProperties.sql" />
+    <Build Include="config\Tables\utbUnits.sql" />
+    <Build Include="config\Tables\utbUses.sql" />
+    <Build Include="sal\Tables\utbDeliveryAddresses.sql" />
+    <Build Include="sal\Tables\utbDeliveryMethods.sql" />
+    <Build Include="sal\Tables\utbFacturationInfo.sql" />
+    <Build Include="sal\Tables\utbOrderDetails.sql" />
+    <Build Include="sal\Tables\utbOrders.sql" />
+    <Build Include="sal\Tables\utbOrderStatus.sql" />
+    <Build Include="sal\Tables\utbProducts.sql" />
+    <Build Include="Security\adm.sql" />
+    <Build Include="Security\config.sql" />
+    <Build Include="Security\sal.sql" />
   </ItemGroup>
 </Project>
