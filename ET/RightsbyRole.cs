@@ -11,11 +11,9 @@ namespace ET
 
         public int RoleID { get; set; }
 
-        public bool Read { get; set; }
+        public bool ReadRight { get; set; }
 
-        public bool Write { get; set; }
-
-        public bool ActiveFlag { get; set; }
+        public bool WriteRight { get; set; }
 
         public string ActionType { get; set; }
     }

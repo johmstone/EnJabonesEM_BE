@@ -10,6 +10,8 @@ namespace ET
 
         public int UserID { get; set; }
 
+        public string FullName { get; set; }
+
         public string IP { get; set; }
 
         public string Country { get; set; }
