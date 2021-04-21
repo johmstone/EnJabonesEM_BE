@@ -106,5 +106,13 @@
     <Build Include="adm\Stored Procedures\uspAddLogin.sql" />
     <Build Include="adm\Stored Procedures\uspAddAppDirectory.sql" />
     <Build Include="adm\Stored Procedures\uspGenerateGUIDResetPassword.sql" />
+    <Build Include="adm\Stored Procedures\uspAddRole.sql" />
+    <Build Include="adm\Stored Procedures\uspAddUser.sql" />
+    <Build Include="adm\Stored Procedures\uspAddUserToken.sql" />
+    <Build Include="adm\Stored Procedures\uspAddWebDirectory.sql" />
+    <Build Include="adm\Stored Procedures\uspResetPassword.sql" />
+    <Build Include="adm\Stored Procedures\uspUpdateUser.sql" />
+    <Build Include="adm\Stored Procedures\uspUpdateWebDirectory.sql" />
+    <Build Include="adm\Stored Procedures\uspUpsertRightsbyRole.sql" />
   </ItemGroup>
 </Project>
