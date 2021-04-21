@@ -99,5 +99,12 @@
     <Build Include="adm\Stored Procedures\uspReadLogins.sql" />
     <Build Include="adm\Stored Procedures\uspReadRights.sql" />
     <Build Include="adm\Stored Procedures\uspValidateGUIDResetPassword.sql" />
+    <Build Include="adm\Stored Procedures\uspReadRoles.sql" />
+    <Build Include="adm\Stored Procedures\uspReadUsers.sql" />
+    <Build Include="adm\Stored Procedures\uspValidateUserToken.sql" />
+    <Build Include="adm\Stored Procedures\uspReadWebDirectory.sql" />
+    <Build Include="adm\Stored Procedures\uspAddLogin.sql" />
+    <Build Include="adm\Stored Procedures\uspAddAppDirectory.sql" />
+    <Build Include="adm\Stored Procedures\uspGenerateGUIDResetPassword.sql" />
   </ItemGroup>
 </Project>

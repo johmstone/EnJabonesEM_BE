@@ -10,6 +10,8 @@ namespace ET
 
         public int RoleID { get; set; }
 
+        public string RoleName { get; set; }
+
         public string FullName { get; set; }
 
         [DataType(DataType.EmailAddress)]
