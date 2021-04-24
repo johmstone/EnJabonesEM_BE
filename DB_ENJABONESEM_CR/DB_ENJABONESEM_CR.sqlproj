@@ -114,5 +114,6 @@
     <Build Include="adm\Stored Procedures\uspUpdateUser.sql" />
     <Build Include="adm\Stored Procedures\uspUpdateWebDirectory.sql" />
     <Build Include="adm\Stored Procedures\uspUpsertRightsbyRole.sql" />
+    <Build Include="adm\Stored Procedures\uspWebDirectorybyUser.sql" />
   </ItemGroup>
 </Project>

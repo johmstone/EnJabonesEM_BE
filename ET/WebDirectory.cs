@@ -27,4 +27,11 @@ namespace ET
 
         public string ActionType { get; set; }
     }
+
+    public class WebDirectoryRequest
+    {
+        public int AppID { get; set; }
+
+        public int UserID { get; set; }
+    }
 }
