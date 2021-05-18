@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokensBL.cs" />
+    <Compile Include="UserBL.cs" />
     <Compile Include="WebDirectoryBL.cs" />
   </ItemGroup>
   <ItemGroup>

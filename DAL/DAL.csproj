@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TokensDAL.cs" />
+    <Compile Include="UserDAL.cs" />
     <Compile Include="WebDirectoryDAL.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -115,5 +115,7 @@
     <Build Include="adm\Stored Procedures\uspUpdateWebDirectory.sql" />
     <Build Include="adm\Stored Procedures\uspUpsertRightsbyRole.sql" />
     <Build Include="adm\Stored Procedures\uspWebDirectorybyUser.sql" />
+    <Build Include="adm\Stored Procedures\uspCheckUserEmailAvailability.sql" />
+    <Build Include="adm\Stored Procedures\uspLoginUser.sql" />
   </ItemGroup>
 </Project>

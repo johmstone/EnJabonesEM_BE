@@ -22,4 +22,17 @@ namespace ET
 
         public DateTime LoginDate { get; set; }
     }
+
+    public class LoginRecord
+    {
+        public int UserID { get; set; }
+
+        public string IP { get; set; }
+
+        public string Country { get; set; }
+
+        public string Region { get; set; }
+
+        public string City { get; set; }
+    }
 }
