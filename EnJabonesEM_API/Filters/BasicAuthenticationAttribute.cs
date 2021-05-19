@@ -31,7 +31,7 @@ namespace EnJabonesEM_API.Filters
                 UserLogin login = new UserLogin()
                 {
                     Email = userName,
-                    PasswordHash = password
+                    Password = password
                 };
 
                 User LoginUser = UBL.Login(login);

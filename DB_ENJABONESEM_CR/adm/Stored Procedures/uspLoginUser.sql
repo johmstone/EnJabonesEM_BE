@@ -23,24 +23,28 @@ AS
 
             -- =======================================================
 				DECLARE @UserID	INT,
-						@NeedResetPwd BIT
+						@NeedResetPwd BIT,
+						@EmailValidated BIT
 
 				IF EXISTS(SELECT * FROM [adm].[utbUsers] WHERE [Email] = @Email)
 					BEGIN
 						SELECT	@UserID = [UserID]
 								,@NeedResetPwd = [NeedResetPwd]
+								,@EmailValidated = [EmailValidated]
 						FROM	[adm].[utbUsers] 
 						WHERE	[Email] = @Email
 								AND [PasswordHash] = HASHBYTES('SHA2_512',@Password)
 								AND [ActiveFlag] = 1
 						
 						SELECT	[UserID] = ISNULL(@UserID,-1),
-								[NeedResetPwd] = ISNULL(@NeedResetPwd,0)								
+								[NeedResetPwd] = ISNULL(@NeedResetPwd,0),
+								[EmailValidated] = ISNULL(@EmailValidated,0)							
 					END
 				ELSE
 					BEGIN
 						SELECT	[UserID] = 0 /*Usuario No registrado*/
 								,[NeedResetPwd] = 0
+								,[EmailValidated] = 0
 					END	
 			-- =======================================================
 

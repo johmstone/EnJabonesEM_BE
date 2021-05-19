@@ -36,5 +36,20 @@ namespace BL
         {
             return UDAL.Details(UserID);
         }
+
+        public User DetailsbyEmail(string Email)
+        {
+            return UDAL.DetailsbyEmail(Email);
+        }
+
+        public InfoEmailValidation ValidationEmailRequest(string Email)
+        {
+            return UDAL.ValidationEmailRequest(Email);
+        }
+
+        public int ValidateEmail(string EVToken)
+        {
+            return UDAL.ValidateEmail(EVToken);
+        }
     }
 }

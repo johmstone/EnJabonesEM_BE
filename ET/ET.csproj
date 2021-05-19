@@ -49,6 +49,7 @@
     <Compile Include="AppDirectory.cs" />
     <Compile Include="DeliveryAddress.cs" />
     <Compile Include="DeliveryMethod.cs" />
+    <Compile Include="Emails.cs" />
     <Compile Include="FacturatioInfo.cs" />
     <Compile Include="Formula.cs" />
     <Compile Include="GeolocationStack.cs" />

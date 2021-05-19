@@ -24,7 +24,7 @@ namespace ET
 
         [Required]
         [DataType(DataType.Password)]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         public bool NeedResetPwd { get; set; }
 
@@ -52,7 +52,7 @@ namespace ET
         public string Email { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         public string IP { get; set; }
     }
@@ -85,5 +85,14 @@ namespace ET
         public string GUID { get; set; }
 
         public int UserID { get; set; }
+    }
+
+    public class InfoEmailValidation
+    {
+        public string EVToken { get; set; }
+
+        public int UserID { get; set; }
+
+        public string FullName { get; set; }
     }
 }

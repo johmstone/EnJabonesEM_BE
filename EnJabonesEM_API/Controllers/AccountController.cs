@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using EnJabonesEM_API.Filters;
+using System.Web;
+using System.Net.Mail;
 
 namespace EnJabonesEM_API.Controllers
 {
@@ -46,11 +48,67 @@ namespace EnJabonesEM_API.Controllers
         [ResponseType(typeof(bool))]
         public HttpResponseMessage Register([FromBody] User NewUser)
         {
-            NewUser.RoleID = 1;
-            var r = UBL.AddUser(NewUser, NewUser.FullName);
+            var existEmail = UBL.CheckUserEmailAvailability(NewUser.Email);
+            if (existEmail)
+            {
+                NewUser.RoleID = 1;
+                var r = UBL.AddUser(NewUser, NewUser.FullName);
 
-            return this.Request.CreateResponse(HttpStatusCode.OK, r);
+                GenerateEmailValidation(NewUser.Email);
+
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.BadRequest, false);
+            }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/Account/ConfirmEmail")]
+        [ResponseType(typeof(int))]
+        public HttpResponseMessage ConfirmEmail(string id)
+        {
+            var r = UBL.ValidateEmail(id);
+
+            if (r == -1)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            else
+            {
+                if (r == 0)
+                {
+                    return this.Request.CreateResponse(HttpStatusCode.Forbidden);
+                }
+                else
+                {
+                    return this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/Account/ConfirmEmailRequest")]
+        public HttpResponseMessage ConfirmEmailRequest(string id)
+        {
+            var r = UBL.DetailsbyEmail(id);
+
+            if (r.UserID > 0)
+            {
+                GenerateEmailValidation(id);
+                return this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+
 
         [HttpGet]
         [BasicAuthentication]
@@ -69,12 +127,14 @@ namespace EnJabonesEM_API.Controllers
             UserLogin login = new UserLogin()
             {
                 Email = userName,
-                PasswordHash = password
+                Password = password
             };
 
             User LoginUser = UBL.Login(login);
 
-            if (LoginUser.UserID > 0)
+            User Details = UBL.Details(LoginUser.UserID);
+
+            if (LoginUser.EmailValidated && !LoginUser.NeedResetPwd)
             {
                 GeolocationStack location = GetGeolocation(IP);
                 LoginRecord loginRecord = new LoginRecord()
@@ -87,8 +147,6 @@ namespace EnJabonesEM_API.Controllers
                 };
 
                 UBL.AddLogin(loginRecord);
-
-                User Details = UBL.Details(LoginUser.UserID);
 
                 //Details.RolesData = RBL.List().Where(x => x.RoleID == Details.RoleID).FirstOrDefault();
                 //Details.GroupList = GBL.ListbyUser(Details.UserID);
@@ -112,7 +170,7 @@ namespace EnJabonesEM_API.Controllers
 
             else
             {
-                return this.Request.CreateResponse(HttpStatusCode.Unauthorized);
+                return this.Request.CreateResponse(HttpStatusCode.OK, Details);
             }
         }
 
@@ -177,6 +235,41 @@ namespace EnJabonesEM_API.Controllers
             {
                 return NewToken;
             }
+        }
+
+        public void GenerateEmailValidation(string email)
+        {
+            InfoEmailValidation Details = UBL.ValidationEmailRequest(email);
+            string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/ConfirmEmail/" + Details.EVToken;
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/ValidateEmail.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{FullName}", Details.FullName);
+            body = body.Replace("{LinkURL}", LinkURL);
+            //body = body.Replace("{GUID}", Code.GUID);
+
+            Emails Email = new Emails()
+            {
+                FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
+                ToEmail = email,
+                SubjectEmail = "EnJabonesEM - Verificar cuenta",
+                BodyEmail = body
+            };
+
+            MailMessage mm = new MailMessage(Email.FromEmail, Email.ToEmail)
+            {
+                Subject = Email.SubjectEmail,
+                Body = Email.BodyEmail,
+                IsBodyHtml = true,
+                BodyEncoding = Encoding.GetEncoding("utf-8")
+            };
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Send(mm);
         }
     }
 }
