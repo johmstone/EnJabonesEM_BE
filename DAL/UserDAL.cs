@@ -335,5 +335,132 @@ namespace DAL
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             return result;
         }
+
+        public AuthorizationCode AuthCode(string Email)
+        {
+            AuthorizationCode code = new AuthorizationCode();
+
+            try
+            {
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspGenerateGUIDResetPassword]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlParameter ParEmail = new SqlParameter
+                {
+                    ParameterName = "@Email",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = Email.Trim()
+                };
+                SqlCmd.Parameters.Add(ParEmail);
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    dr.Read();
+                    if (dr.HasRows)
+                    {
+                        code.GUID = dr["GUID"].ToString();
+                        code.UserID = Convert.ToInt32(dr["UserID"]);
+                        code.FullName = dr["FullName"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return code;
+        }
+
+        public int ValidateGUID(string GUID)
+        {
+            int ValidCode;
+            try
+            {
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspValidateGUIDResetPassword]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlParameter ParGUID = new SqlParameter
+                {
+                    ParameterName = "@GUID",
+                    SqlDbType = SqlDbType.VarChar,
+                    Value = GUID
+                };
+                SqlCmd.Parameters.Add(ParGUID);
+
+                //EXEC Command
+                ValidCode = Convert.ToInt32(SqlCmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return ValidCode;
+        }
+
+        public bool ResetPassword(ResetPasswordModel Model)
+        {
+            bool rpta;
+            try
+            {
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspResetPassword]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlParameter ParPassword = new SqlParameter
+                {
+                    ParameterName = "@Password",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = Model.Password.Trim()
+                };
+                SqlCmd.Parameters.Add(ParPassword);
+
+                if (Model.UserID > 0)
+                {
+                    SqlParameter pUserID = new SqlParameter
+                    {
+                        ParameterName = "@UserID",
+                        SqlDbType = SqlDbType.Int,
+                        Value = Model.UserID
+                    };
+                    SqlCmd.Parameters.Add(pUserID);
+                }
+                else
+                {
+                    SqlParameter ParGUID = new SqlParameter
+                    {
+                        ParameterName = "@GUID",
+                        SqlDbType = SqlDbType.VarChar,
+                        Value = Model.GUID
+                    };
+                    SqlCmd.Parameters.Add(ParGUID);
+                }
+
+                //EXEC Command
+                SqlCmd.ExecuteNonQuery();
+
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
     }
 }

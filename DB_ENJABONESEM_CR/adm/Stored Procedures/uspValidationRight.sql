@@ -1,8 +1,8 @@
 ﻿-- ======================================================================
--- Name: [adm].[uspValidateGUIDResetPassword]
--- Desc: Valida el status de los GUID para la restauración de contraseñas
+-- Name: [adm].[uspValidationRight]
+-- Desc: Valida los derechos de cada usuario
 -- Auth: Jonathan Piedra johmstone@gmail.com
--- Date: 04/20/2021
+-- Date: 05/23/2021
 -------------------------------------------------------------
 -- Change History
 -------------------------------------------------------------
@@ -10,8 +10,10 @@
 -- --	----		------		-----------------------------
 -- ======================================================================
 
-CREATE PROCEDURE [adm].[uspValidateGUIDResetPassword]
-    @GUID VARCHAR(MAX)
+CREATE PROCEDURE [adm].[uspValidationRight]
+	@UserID 	INT,
+	@Controller VARCHAR(50),
+	@Action		VARCHAR(50)
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -21,10 +23,19 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	[UserID] = ISNULL([UserID],0)
-				FROM	[adm].[utbResetPasswords]
-				WHERE	[GUID] = @GUID  
-                        AND [ActiveFlag] = 1
+                SELECT	W.[WebID]
+                        ,[ReadRight]	= CONVERT(BIT,ISNULL(R.[Read],0))
+                        ,[WriteRight]	= CONVERT(BIT,ISNULL(R.[Write],0))
+			
+                FROM		[adm].[utbWebDirectory] W
+                OUTER APPLY (SELECT	RR.[Read]
+				                    ,RR.[Write]
+			                 FROM	[adm].[utbRightsbyRole] RR
+				                    INNER JOIN [adm].[utbUsers] U ON U.[RoleID] = RR.[RoleID] 
+			                 WHERE  RR.[WebID] = W.[WebID]
+				                    AND U.[UserID] = @UserID) R
+                WHERE		W.[Controller] = @Controller
+                AND W.[Action] = @Action											
 			-- =======================================================
 
         END TRY

@@ -31,11 +31,11 @@ namespace EnJabonesEM_API.Controllers
         private static int expireTime = Convert.ToInt32(ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES"]);
 
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [Route("api/Account/CheckEmailAvailability")]
         [ResponseType(typeof(bool))]
-        public HttpResponseMessage CheckEmailAvailability(string Email)
+        public HttpResponseMessage CheckEmailAvailability([FromBody] string Email)
         {
             var r = UBL.CheckUserEmailAvailability(Email);
 
@@ -64,13 +64,13 @@ namespace EnJabonesEM_API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [Route("api/Account/ConfirmEmail")]
         [ResponseType(typeof(int))]
-        public HttpResponseMessage ConfirmEmail(string id)
+        public HttpResponseMessage ConfirmEmail([FromBody] string EVToken)
         {
-            var r = UBL.ValidateEmail(id);
+            var r = UBL.ValidateEmail(EVToken);
 
             if (r == -1)
             {
@@ -90,21 +90,83 @@ namespace EnJabonesEM_API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
         [Route("api/Account/ConfirmEmailRequest")]
-        public HttpResponseMessage ConfirmEmailRequest(string id)
+        public HttpResponseMessage ConfirmEmailRequest([FromBody] string Email)
         {
-            var r = UBL.DetailsbyEmail(id);
+            var r = UBL.DetailsbyEmail(Email);
 
             if (r.UserID > 0)
             {
-                GenerateEmailValidation(id);
+                GenerateEmailValidation(Email);
                 return this.Request.CreateResponse(HttpStatusCode.OK);
             }
             else
             {
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("api/Account/ForgotPassword")]
+        public HttpResponseMessage ForgotPassword([FromBody] string Email)
+        {
+            var r = UBL.DetailsbyEmail(Email);
+
+            if (r.UserID > 0)
+            {
+                GenerateForgotPasswordEmail(Email);
+                return this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Account/CheckGUID/")]
+        [ResponseType(typeof(int))]
+        public HttpResponseMessage CheckGUID([FromBody] string GUID)
+        {
+            var r = UBL.ValidateGUID(GUID);
+
+            if (r > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Account/ResetPassword")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage ResetPassword([FromBody] ResetPasswordModel model)
+        {
+            int validation;
+
+            if (model.GUID == "No Required")
+            {
+                validation = model.UserID;
+            }
+            else
+            {
+                validation = UBL.ValidateGUID(model.GUID);
+            }
+
+            if (validation == 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+            else
+            {
+                var r = UBL.ResetPassword(model);
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
         }
 
@@ -257,6 +319,41 @@ namespace EnJabonesEM_API.Controllers
                 FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
                 ToEmail = email,
                 SubjectEmail = "EnJabonesEM - Verificar cuenta",
+                BodyEmail = body
+            };
+
+            MailMessage mm = new MailMessage(Email.FromEmail, Email.ToEmail)
+            {
+                Subject = Email.SubjectEmail,
+                Body = Email.BodyEmail,
+                IsBodyHtml = true,
+                BodyEncoding = Encoding.GetEncoding("utf-8")
+            };
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Send(mm);
+        }
+
+        public void GenerateForgotPasswordEmail(string email)
+        {
+            AuthorizationCode Code = UBL.AuthCode(email);
+            string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/ResetPassword/" + Code.GUID;
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/ForgotPassword.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{FullName}", Code.FullName);
+            body = body.Replace("{LinkURL}", LinkURL);
+            //body = body.Replace("{GUID}", Code.GUID);
+
+            Emails Email = new Emails()
+            {
+                FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
+                ToEmail = email,
+                SubjectEmail = "EnJabonesEM - Restablecer Contraseña",
                 BodyEmail = body
             };
 

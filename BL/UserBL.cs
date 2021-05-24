@@ -51,5 +51,20 @@ namespace BL
         {
             return UDAL.ValidateEmail(EVToken);
         }
+
+        public AuthorizationCode AuthCode(string email)
+        {
+            return UDAL.AuthCode(email);
+        }
+
+        public int ValidateGUID(string guid)
+        {
+            return UDAL.ValidateGUID(guid);
+        }
+
+        public bool ResetPassword(ResetPasswordModel model)
+        {
+            return UDAL.ResetPassword(model);
+        }
     }
 }

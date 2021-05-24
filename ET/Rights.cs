@@ -2,7 +2,7 @@
 
 namespace ET
 {
-    public class RightsbyRole
+    public class Rights
     {
         [Key]
         public int RightID { get; set; }
@@ -16,5 +16,19 @@ namespace ET
         public bool WriteRight { get; set; }
 
         public string ActionType { get; set; }
+    }
+
+    public class AccessRights
+    {
+        public bool ReadRight { get; set; }
+
+        public bool WriteRight { get; set; }
+    }
+
+    public class AccessRightsRequest
+    {
+        public int UserID { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
     }
 }
