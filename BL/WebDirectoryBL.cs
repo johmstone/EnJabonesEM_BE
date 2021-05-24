@@ -18,9 +18,9 @@ namespace BL
             return WDAL.ValidationRights(model);
         }
 
-        public List<WebDirectory> List(int AppID)
+        public List<WebDirectory> List()
         {
-            return WDAL.List(AppID);
+            return WDAL.List();
         }
 
         public bool AddNew(WebDirectory detail, string insertuser)

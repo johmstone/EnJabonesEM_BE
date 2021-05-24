@@ -11,8 +11,7 @@
 -- ======================================================================
 
 CREATE PROCEDURE [adm].[uspReadRights]
-	@AppAID INT,
-    @RoleID INT
+	@RoleID INT
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -23,6 +22,7 @@ AS
 
             -- =======================================================
 				SELECT	W.[WebID]
+                        ,W.[AppID]
 						,[RoleID]		= @RoleID
 						,W.[DisplayName]
 						,[RightID]		= ISNULL(RR.[RightID],0)
@@ -33,7 +33,7 @@ AS
 																AND RR.[ActiveFlag] = 1
 																AND RR.[RoleID] = @RoleID
 				WHERE	W.[ActiveFlag] = 1
-                        AND W.[AppID] = @AppAID
+                ORDER BY W.[AppID], W.[Order]
 			-- =======================================================
 
         END TRY

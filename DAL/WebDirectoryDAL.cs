@@ -108,7 +108,7 @@ namespace DAL
             return Detail;
         }
 
-        public List<WebDirectory> List(int AppID)
+        public List<WebDirectory> List()
         {
             List<WebDirectory> List = new List<WebDirectory>();
 
@@ -120,8 +120,6 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
-                SqlCmd.Parameters.AddWithValue("@AppID", AppID);
-
                 using (var dr = SqlCmd.ExecuteReader())
                 {
                     while (dr.Read())
@@ -129,7 +127,7 @@ namespace DAL
                         var detail = new WebDirectory
                         {
                             WebID = Convert.ToInt32(dr["WebID"]),
-                            AppID = AppID,
+                            AppID = Convert.ToInt32(dr["AppID"]),
                             Controller = dr["Controller"].ToString(),
                             Action = dr["Action"].ToString(),
                             PublicMenu = Convert.ToBoolean(dr["PublicMenu"]),

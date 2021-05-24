@@ -9,7 +9,11 @@ namespace ET
 
         public int WebID { get; set; }
 
+        public int AppID { get; set; }
+
         public int RoleID { get; set; }
+
+        public string DisplayName { get; set; }
 
         public bool ReadRight { get; set; }
 

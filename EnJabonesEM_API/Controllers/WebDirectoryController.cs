@@ -51,9 +51,9 @@ namespace EnJabonesEM_API.Controllers
         [HttpPost]
         [ApiKeyAuthentication]
         [ResponseType(typeof(List<WebDirectory>))]
-        public HttpResponseMessage List(int id)
+        public HttpResponseMessage List()
         {
-            var r = WBL.List(id);
+            var r = WBL.List();
             if (r.Count() > 0)
             {
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);

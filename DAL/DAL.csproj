@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightsDAL.cs" />
+    <Compile Include="RolesDAL.cs" />
     <Compile Include="TokensDAL.cs" />
     <Compile Include="UserDAL.cs" />
     <Compile Include="WebDirectoryDAL.cs" />
