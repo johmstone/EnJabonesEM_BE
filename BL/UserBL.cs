@@ -12,6 +12,11 @@ namespace BL
     {
         private UserDAL UDAL = new UserDAL();
 
+        public List<User> List()
+        {
+            return UDAL.List();
+        }
+
         public bool CheckUserEmailAvailability(string Email)
         {
             return UDAL.CheckUserEmailAvailability(Email);

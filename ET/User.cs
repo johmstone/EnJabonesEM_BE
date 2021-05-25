@@ -32,7 +32,7 @@ namespace ET
 
         public bool ActiveFlag { get; set; }
 
-        public DateTime LastActivityDate { get; set; }
+        public Nullable<DateTime> LastActivityDate { get; set; }
 
         public string Token { get; set; }
 

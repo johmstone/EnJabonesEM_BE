@@ -89,7 +89,7 @@ namespace EnJabonesEM_API.Controllers
             var jsonToken = handler.ReadToken(token);
             var tokenS = handler.ReadToken(token) as JwtSecurityToken;
 
-            var UserName = tokenS.Claims.First(claim => claim.Type == "UserName").Value;
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
 
             var r = RRBL.Update(model, UserName);
 

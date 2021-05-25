@@ -64,7 +64,7 @@ namespace DAL
             try
             {
                 SqlCon.Open();
-                var SqlCmd = new SqlCommand("[adm].[uspUpdateRights]", SqlCon)
+                var SqlCmd = new SqlCommand("[adm].[uspUpsertRightsbyRole]", SqlCon)
                 {
                     CommandType = CommandType.StoredProcedure
                 };

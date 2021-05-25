@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,6 +10,57 @@ namespace DAL
     public class UserDAL
     {
         private SqlConnection SqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_Connection"].ToString());
+
+        public List<User> List()
+        {
+            List<User> List = new List<User>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspReadUsers]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new User
+                        {
+                            UserID = Convert.ToInt32(dr["UserID"]),
+                            RoleID = Convert.ToInt32(dr["RoleID"]),
+                            FullName = dr["FullName"].ToString(),
+                            Email = dr["Email"].ToString(),
+                            EmailValidated = Convert.ToBoolean(dr["EmailValidated"]),
+                            Subscriber = Convert.ToBoolean(dr["Subscriber"]),
+                            NeedResetPwd = Convert.ToBoolean(dr["NeedResetPwd"]),
+                            ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]),
+                            CreationDate = Convert.ToDateTime(dr["CreationDate"]),
+                            RoleName = dr["RoleName"].ToString()
+                        };
+                        if (!Convert.IsDBNull(dr["LastActivityDate"]))
+                        {
+                            detail.LastActivityDate = Convert.ToDateTime(dr["LastActivityDate"]);
+                        }
+                        else
+                        {
+                            detail.LastActivityDate = null;
+                        }
+                        List.Add(detail);
+                    }
+                }
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
+        }
 
         public bool CheckUserEmailAvailability(string Email)
         {
