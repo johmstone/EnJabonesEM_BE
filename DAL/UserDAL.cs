@@ -62,6 +62,135 @@ namespace DAL
             return List;
         }
 
+        public bool Update(User User, string InsertUser)
+        {
+            bool rpta;
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspUpdateUser]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlParameter ParInsertUser = new SqlParameter
+                {
+                    ParameterName = "@InsertUser",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = InsertUser.Trim()
+                };
+                SqlCmd.Parameters.Add(ParInsertUser);
+
+                SqlParameter pActionType = new SqlParameter
+                {
+                    ParameterName = "@ActionType",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = User.ActionType
+                };
+                SqlCmd.Parameters.Add(pActionType);
+
+                SqlParameter pUserID = new SqlParameter
+                {
+                    ParameterName = "@UserID",
+                    SqlDbType = SqlDbType.Int,
+                    Value = User.UserID
+                };
+                SqlCmd.Parameters.Add(pUserID);
+
+                SqlParameter ParFullName = new SqlParameter
+                {
+                    ParameterName = "@FullName",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = User.FullName.Trim()
+                };
+                SqlCmd.Parameters.Add(ParFullName);
+
+                SqlParameter ParEmail = new SqlParameter
+                {
+                    ParameterName = "@Email",
+                    SqlDbType = SqlDbType.VarChar,
+                    Value = User.Email.Trim()
+                };
+                SqlCmd.Parameters.Add(ParEmail);
+
+
+                SqlParameter pActiveFlag = new SqlParameter
+                {
+                    ParameterName = "@ActiveFlag",
+                    SqlDbType = SqlDbType.Bit,
+                    Value = User.ActiveFlag
+                };
+                SqlCmd.Parameters.Add(pActiveFlag);
+
+                SqlParameter ParRoleID = new SqlParameter
+                {
+                    ParameterName = "@RoleID",
+                    SqlDbType = SqlDbType.Int,
+                    Value = User.RoleID
+                };
+                SqlCmd.Parameters.Add(ParRoleID);
+
+                //EXEC Command
+                SqlCmd.ExecuteNonQuery();
+
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
+
+        public bool AdminResetPassword(int UserID, string InsertUser)
+        {
+            bool rpta;
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspAdminResetPassword]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlParameter pUserID = new SqlParameter
+                {
+                    ParameterName = "@UserID",
+                    SqlDbType = SqlDbType.Int,
+                    Value = UserID
+                };
+                SqlCmd.Parameters.Add(pUserID);
+
+                SqlParameter pInsertUser = new SqlParameter
+                {
+                    ParameterName = "@InsertUser",
+                    SqlDbType = SqlDbType.VarChar,
+                    Size = 50,
+                    Value = InsertUser
+                };
+                SqlCmd.Parameters.Add(pInsertUser);
+
+                //EXEC Command
+                SqlCmd.ExecuteNonQuery();
+
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
+
         public bool CheckUserEmailAvailability(string Email)
         {
             bool rpta;

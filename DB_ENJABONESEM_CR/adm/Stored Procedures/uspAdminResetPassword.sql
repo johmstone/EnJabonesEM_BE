@@ -1,8 +1,8 @@
 ﻿-- ======================================================================
--- Name: [adm].[uspResetPassword]
+-- Name: [adm].[uspAdminResetPassword]
 -- Desc: Se utiliza para restablecer contraseñas
 -- Auth: Jonathan Piedra johmstone@gmail.com
--- Date: 04/21/2021
+-- Date: 3/25/2020
 -------------------------------------------------------------
 -- Change History
 -------------------------------------------------------------
@@ -10,10 +10,9 @@
 -- --	----		------		-----------------------------
 -- ======================================================================
 
-CREATE PROCEDURE [adm].[uspResetPassword]
-	@Password	VARCHAR(50),
-    @GUID		VARCHAR(MAX) = NULL,	
-    @UserID		INT = NULL
+CREATE PROCEDURE [adm].[uspAdminResetPassword]
+	@UserID		INT,
+	@InsertUser	VARCHAR(50)
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -32,41 +31,12 @@ AS
                 END
 
             -- =======================================================
-				DECLARE	@Email	VARCHAR(50)
-
-                IF (@UserID IS NULL)
-                    BEGIN
-				        SELECT	@UserID	=	RR.[UserID],
-						        @Email	=	U.[Email]						
-				        FROM	[adm].[utbResetPasswords]  RR
-						        LEFT JOIN [adm].[utbUsers] U ON U.[UserID] = RR.UserID
-				        WHERE	RR.[GUID] = @GUID
-				
-				        UPDATE	[adm].[utbUsers]
-				        SET		[PasswordHash]		=	HASHBYTES('SHA2_512',@Password),
-                                [LastModifyDate]	=	GETDATE(),
-						        [LastModifyUser]	=	@Email
-				        WHERE	[UserID] = @UserID
-
-				        UPDATE 	[adm].[utbResetPasswords]
-				        SET		[ActiveFlag]	=	0,
-						        [LastModifyDate]	=	GETDATE(),
-						        [LastModifyUser]	=	@Email
-				        WHERE	[GUID] = @GUID
-                    END
-                ELSE
-                    BEGIN
-                        SELECT	@Email	=	[Email]	
-				        FROM	[adm].[utbUsers]  
-                        WHERE	[UserID] = @UserID
-
-                        UPDATE	[adm].[utbUsers]
-				        SET		[PasswordHash]		=	HASHBYTES('SHA2_512',@Password),
-                                [NeedResetPwd]      =   0,
-                                [LastModifyDate]	=	GETDATE(),
-						        [LastModifyUser]	=	@Email
-				        WHERE	[UserID] = @UserID
-                    END
+				UPDATE	[adm].[utbUsers]
+				SET		[PasswordHash]		=	HASHBYTES('SHA2_512','!234s6789'),
+                        [NeedResetPwd]      =   1,
+						[LastModifyDate]	=	GETDATE(),
+						[LastModifyUser]	=	@InsertUser
+				WHERE	[UserID] = @UserID
 			-- =======================================================
 
         IF ( @@trancount > 0

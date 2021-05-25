@@ -17,6 +17,16 @@ namespace BL
             return UDAL.List();
         }
 
+        public bool Update(User user, string insertuser)
+        {
+            return UDAL.Update(user, insertuser);
+        }
+
+        public bool AdminResetPassword(int UserID, string InsertUser)
+        {
+            return UDAL.AdminResetPassword(UserID, InsertUser);
+        }
+
         public bool CheckUserEmailAvailability(string Email)
         {
             return UDAL.CheckUserEmailAvailability(Email);

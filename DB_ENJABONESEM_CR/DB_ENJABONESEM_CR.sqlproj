@@ -121,5 +121,6 @@
     <Build Include="adm\Stored Procedures\uspGenerateEmailValidationToken.sql" />
     <Build Include="adm\Stored Procedures\uspValidateUserEmail.sql" />
     <Build Include="adm\Stored Procedures\uspValidationRight.sql" />
+    <Build Include="adm\Stored Procedures\uspAdminResetPassword.sql" />
   </ItemGroup>
 </Project>
