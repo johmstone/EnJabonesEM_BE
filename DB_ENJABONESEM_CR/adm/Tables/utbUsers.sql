@@ -3,6 +3,7 @@
     [RoleID]           INT           NOT NULL,
     [FullName]         VARCHAR (50)  NOT NULL,
     [Email]            VARCHAR (50)  NOT NULL,
+	[PhotoPath]		   VARCHAR (500) NULL,
 	[EmailValidated]   BIT			 CONSTRAINT [utbUsersDefaultEmailValidatedFalse] DEFAULT ((0)) NOT NULL,
     [PasswordHash]     BINARY (64)   NOT NULL,
 	[NeedResetPwd]	   BIT           CONSTRAINT [utbUsersDefaultNeedResetPwdFalse] DEFAULT ((0)) NOT NULL,

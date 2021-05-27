@@ -34,6 +34,7 @@ namespace DAL
                             RoleID = Convert.ToInt32(dr["RoleID"]),
                             FullName = dr["FullName"].ToString(),
                             Email = dr["Email"].ToString(),
+                            PhotoPath = dr["PhotoPath"].ToString(),
                             EmailValidated = Convert.ToBoolean(dr["EmailValidated"]),
                             Subscriber = Convert.ToBoolean(dr["Subscriber"]),
                             NeedResetPwd = Convert.ToBoolean(dr["NeedResetPwd"]),
@@ -117,6 +118,14 @@ namespace DAL
                     Value = User.Email.Trim()
                 };
                 SqlCmd.Parameters.Add(ParEmail);
+
+                SqlParameter ParPhoto = new SqlParameter
+                {
+                    ParameterName = "@PhotoPath",
+                    SqlDbType = SqlDbType.VarChar,
+                    Value = User.PhotoPath
+                };
+                SqlCmd.Parameters.Add(ParPhoto);
 
 
                 SqlParameter pActiveFlag = new SqlParameter
@@ -398,6 +407,7 @@ namespace DAL
                         Detail.RoleID = Convert.ToInt32(dr["RoleID"]);
                         Detail.FullName = dr["FullName"].ToString();
                         Detail.Email = dr["Email"].ToString();
+                        Detail.PhotoPath = dr["PhotoPath"].ToString();
                         Detail.EmailValidated = Convert.ToBoolean(dr["EmailValidated"]);
                         Detail.Subscriber = Convert.ToBoolean(dr["Subscriber"]);
                         Detail.ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]);

@@ -62,7 +62,7 @@ namespace EnJabonesEM_API.Controllers
         }
 
         [HttpPost]
-        [Route("api/Roles/Rights")]
+        [Route("api/Roles/Rights/{id}")]
         [ResponseType(typeof(List<Rights>))]
         public HttpResponseMessage Rights(int id)
         {

@@ -16,6 +16,7 @@ CREATE PROCEDURE [adm].[uspUpdateUser]
 	@ActionType		VARCHAR(10),
 	@FullName		VARCHAR(50) = NULL,
 	@Email			VARCHAR(50) = NULL,
+    @PhotoPath      VARCHAR(500) = NULL,
 	@ActiveFlag		BIT = NULL,
 	@RoleID			INT = NULL
 AS 
@@ -55,6 +56,7 @@ AS
 						SET		[RoleID]		= @RoleID
 								,[FullName]		= @FullName
 								,[Email]		= @Email
+                                ,[PhotoPath]    = @PhotoPath
 								,[ActiveFlag]	= @ActiveFlag
 								,[LastModifyUser] = @InsertUser
 								,[LastModifyDate] = GETDATE()

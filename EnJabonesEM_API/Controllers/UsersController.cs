@@ -38,6 +38,22 @@ namespace EnJabonesEM_API.Controllers
         }
 
         [HttpPost]
+        [ResponseType(typeof(User))]
+        public HttpResponseMessage Details(int id)
+        {
+            var r = UBL.Details(id);
+
+            if (r.UserID > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
         [ApiKeyAuthentication]
         [Route("api/Users/Update")]
         [ResponseType(typeof(bool))]
@@ -121,5 +137,7 @@ namespace EnJabonesEM_API.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
         }
+        
+
     }
 }

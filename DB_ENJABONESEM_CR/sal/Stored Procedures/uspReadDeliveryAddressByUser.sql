@@ -1,8 +1,8 @@
 ﻿-- ======================================================================
--- Name: [adm].[uspReadUsers]
--- Desc: Retorna los usuarios registrados
+-- Name: [sal].[uspReadDeliveryAddressByUser]
+-- Desc: Retorna las direcciones de envio
 -- Auth: Jonathan Piedra johmstone@gmail.com
--- Date: 04/20/2021
+-- Date: 05/26/2021
 -------------------------------------------------------------
 -- Change History
 -------------------------------------------------------------
@@ -10,9 +10,8 @@
 -- --	----		------		-----------------------------
 -- ======================================================================
 
-CREATE PROCEDURE [adm].[uspReadUsers]
-	@UserID		INT = NULL,
-	@Email		VARCHAR(100) = NULL
+CREATE PROCEDURE [sal].[uspReadDeliveryAddressByUser]
+    @UserID INT
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -22,22 +21,25 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	U.[UserID]
-						,U.[RoleID]
-						,U.[FullName]
-						,U.[Email]
-						,U.[PhotoPath]
-						,U.[EmailValidated]
-						,U.[Subscriber]
-						,U.[NeedResetPwd]
-						,U.[ActiveFlag]
-						,U.[LastActivityDate]
-						,U.[CreationDate]
-						,[RoleName] = CASE WHEN R.[RoleID] = 1 THEN 'Usuario' ELSE R.[RoleName] END
-				FROM	[adm].[utbUsers] U
-						LEFT JOIN [adm].[utbRoles] R ON R.RoleID = U.[RoleID]
-				WHERE	U.[UserID] = ISNULL(@UserID,[UserID])
-						AND U.[Email] = ISNULL(@Email,U.[Email])
+				SELECT	DA.[DeliveryAddressID]
+						,DA.[AddressID]
+						,DA.[ContactName]
+						,CR.[CostaRicaID]
+						,CR.[ProvinceID]
+						,CR.[Province]
+						,CR.[CantonID]
+						,CR.[Canton]
+						,CR.[DistrictID]
+						,CR.[District]
+						,AD.[Street]
+						,AD.[PhoneNumber]
+						,AD.[Notes]
+						,DA.[PrimaryFlag]
+				FROM	[sal].[utbDeliveryAddresses] DA
+						LEFT JOIN [sal].[utbAddresses] AD ON AD.[AddressID] = DA.[AddressID]
+						LEFT JOIN [config].[utbCostaRicaData] CR ON CR.[CostaRicaID] = AD.[CostaRicaID]
+				WHERE	[DA].[UserID] = @UserID
+						AND DA.[ActiveFlag] = 1
 			-- =======================================================
 
         END TRY

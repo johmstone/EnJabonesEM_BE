@@ -1,10 +1,8 @@
-﻿CREATE TABLE [config].[utbAddresses]
+﻿CREATE TABLE [sal].[utbAddresses]
 (
 	[AddressID]			INT		IDENTITY(1,1)	NOT NULL,
-	[Province]			VARCHAR(50)		NOT NULL,
-	[Canton]			VARCHAR(50)		NOT NULL,
-	[District]			VARCHAR(50)		NOT NULL,
-	[Street]			VARCHAR(MAX)	NOT NULL,
+	[CostaRicaID]		INT				NOT NULL,
+	[Street]			VARCHAR(MAX)	NOT NULL,	
 	[PhoneNumber]		INT				NOT NULL,
 	[Notes]				VARCHAR(MAX)	NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbAddressesDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
@@ -12,11 +10,12 @@
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbAddressesDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,
     [LastModifyDate]	DATETIME		CONSTRAINT [utbAddressesDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbAddressesDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
-	CONSTRAINT [utbAddressID] PRIMARY KEY CLUSTERED ([AddressID] ASC)
+	CONSTRAINT [utbAddressID] PRIMARY KEY CLUSTERED ([AddressID] ASC),
+	CONSTRAINT [FK.config.utbCostaRicaData.sal.utbAddresses.AddressID] FOREIGN KEY ([CostaRicaID]) REFERENCES [config].[utbCostaRicaData] ([CostaRicaID])
 );
 
 GO
-CREATE TRIGGER [config].[utrLogAddresses] ON [config].[utbAddresses]
+CREATE TRIGGER [sal].[utrLogAddresses] ON [sal].[utbAddresses]
 FOR INSERT, UPDATE
 AS
 	BEGIN

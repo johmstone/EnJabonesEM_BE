@@ -75,7 +75,6 @@
     <Build Include="adm\Tables\utbUsers.sql" />
     <Build Include="adm\Tables\utbUserTokens.sql" />
     <Build Include="adm\Tables\utbWebDirectory.sql" />
-    <Build Include="config\Tables\utbAddresses.sql" />
     <Build Include="config\Tables\utbFormulas.sql" />
     <Build Include="config\Tables\utbIngredientProperties.sql" />
     <Build Include="config\Tables\utbIngredients.sql" />
@@ -122,5 +121,11 @@
     <Build Include="adm\Stored Procedures\uspValidateUserEmail.sql" />
     <Build Include="adm\Stored Procedures\uspValidationRight.sql" />
     <Build Include="adm\Stored Procedures\uspAdminResetPassword.sql" />
+    <Build Include="sal\Tables\utbAddresses.sql" />
+    <Build Include="config\Tables\utbCostaRicaData.sql" />
+    <Build Include="config\Stored Procedures\uspReadCRDataProvinces.sql" />
+    <Build Include="config\Stored Procedures\uspReadCRDataCantons.sql" />
+    <Build Include="config\Stored Procedures\uspReadCRDataDistrics.sql" />
+    <Build Include="sal\Stored Procedures\uspReadDeliveryAddressByUser.sql" />
   </ItemGroup>
 </Project>

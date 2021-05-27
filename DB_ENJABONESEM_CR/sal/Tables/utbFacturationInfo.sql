@@ -14,7 +14,7 @@
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbFacturationInfoDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbFacurationInfoID] PRIMARY KEY CLUSTERED ([FacurationInfoID] ASC),
     CONSTRAINT [FK.adm.utbUsers.sal.utbFacturationInfo.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.config.utbAddresses.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
+	CONSTRAINT [FK.sal.utbAddresses.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [sal].[utbAddresses] ([AddressID])
 );
 
 GO

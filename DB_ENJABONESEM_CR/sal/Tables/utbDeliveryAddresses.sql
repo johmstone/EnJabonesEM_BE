@@ -12,7 +12,7 @@
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbDeliveryAddressesDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbDeliveryAddressID] PRIMARY KEY CLUSTERED ([DeliveryAddressID] ASC),
     CONSTRAINT [FK.adm.utbUsers.sal.utbDeliveryAddresses.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.config.utbAddresses.sal.utbDeliveryAddresses.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [config].[utbAddresses] ([AddressID])
+	CONSTRAINT [FK.sal.utbAddresses.sal.utbDeliveryAddresses.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [sal].[utbAddresses] ([AddressID])
 );
 
 GO

@@ -256,7 +256,7 @@ namespace EnJabonesEM_API.Controllers
             return location;
         }
 
-        public Token GenerateToken(int UserID)
+        private Token GenerateToken(int UserID)
         {
             User Details = UBL.Details(UserID);
             var SecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));

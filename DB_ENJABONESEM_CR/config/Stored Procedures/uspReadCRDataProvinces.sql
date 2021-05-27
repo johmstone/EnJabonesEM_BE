@@ -1,8 +1,8 @@
 ﻿-- ======================================================================
--- Name: [adm].[uspReadUsers]
--- Desc: Retorna los usuarios registrados
+-- Name: [config].[uspReadCRDataProvinces]
+-- Desc: Retorna las provincias
 -- Auth: Jonathan Piedra johmstone@gmail.com
--- Date: 04/20/2021
+-- Date: 05/26/2021
 -------------------------------------------------------------
 -- Change History
 -------------------------------------------------------------
@@ -10,9 +10,7 @@
 -- --	----		------		-----------------------------
 -- ======================================================================
 
-CREATE PROCEDURE [adm].[uspReadUsers]
-	@UserID		INT = NULL,
-	@Email		VARCHAR(100) = NULL
+CREATE PROCEDURE [config].[uspReadCRDataProvinces]
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -22,22 +20,10 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	U.[UserID]
-						,U.[RoleID]
-						,U.[FullName]
-						,U.[Email]
-						,U.[PhotoPath]
-						,U.[EmailValidated]
-						,U.[Subscriber]
-						,U.[NeedResetPwd]
-						,U.[ActiveFlag]
-						,U.[LastActivityDate]
-						,U.[CreationDate]
-						,[RoleName] = CASE WHEN R.[RoleID] = 1 THEN 'Usuario' ELSE R.[RoleName] END
-				FROM	[adm].[utbUsers] U
-						LEFT JOIN [adm].[utbRoles] R ON R.RoleID = U.[RoleID]
-				WHERE	U.[UserID] = ISNULL(@UserID,[UserID])
-						AND U.[Email] = ISNULL(@Email,U.[Email])
+				SELECT	DISTINCT 
+		                [ProvinceID]
+		                ,[Province]
+                FROM	[config].[utbCostaRicaData]
 			-- =======================================================
 
         END TRY

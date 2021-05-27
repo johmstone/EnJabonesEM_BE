@@ -20,6 +20,8 @@ namespace ET
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public string PhotoPath { get; set; }
+
         public bool EmailValidated { get; set; }
 
         [Required]

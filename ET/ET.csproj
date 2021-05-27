@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="AppDirectory.cs" />
+    <Compile Include="CostaRicaDistrics.cs" />
     <Compile Include="DeliveryAddress.cs" />
     <Compile Include="DeliveryMethod.cs" />
     <Compile Include="Emails.cs" />
