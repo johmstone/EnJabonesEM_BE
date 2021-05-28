@@ -63,6 +63,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspUpsertRightsbyRole]", SqlCon)
                 {

@@ -1,11 +1,13 @@
 ﻿CREATE TABLE [sal].[utbFacturationInfo]
 (
-	[FacurationInfoID]	INT		IDENTITY(1,1)	NOT NULL,
-	[UserID]			INT			NOT NULL,
-	[IdentityType]		VARCHAR(50)	NOT NULL,
-	[IdentityID]		VARCHAR(50)	NOT NULL,
-	[FullName]			VARCHAR(50)	NOT NULL,
-	[AddressID]			INT			NOT NULL,
+	[FacurationInfoID]	INT				IDENTITY(1,1)	NOT NULL,
+	[UserID]			INT				NOT NULL,
+	[IdentityType]		VARCHAR(50)		NOT NULL,
+	[IdentityID]		VARCHAR(50)		NOT NULL,
+	[FullName]			VARCHAR(50)		NOT NULL,
+	[PhoneNumber]		INT				NOT NULL,
+	[CostaRicaID]		INT				NOT NULL,
+	[Street]			VARCHAR(MAX)	NOT NULL,
 	[PrimaryFlag]		BIT				CONSTRAINT [utbFacturationInfoDefaultPrimaryFlagTrue] DEFAULT ((0)) NOT NULL,	
 	[ActiveFlag]		BIT				CONSTRAINT [utbFacturationInfoDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[InsertDate]		DATETIME		CONSTRAINT [utbFacturationInfoDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
@@ -14,7 +16,7 @@
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbFacturationInfoDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbFacurationInfoID] PRIMARY KEY CLUSTERED ([FacurationInfoID] ASC),
     CONSTRAINT [FK.adm.utbUsers.sal.utbFacturationInfo.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.sal.utbAddresses.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [sal].[utbAddresses] ([AddressID])
+	CONSTRAINT [FK.config.utbCostaRicaData.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([CostaRicaID]) REFERENCES [config].[utbCostaRicaData] ([CostaRicaID])
 );
 
 GO

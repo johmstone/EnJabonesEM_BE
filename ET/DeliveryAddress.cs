@@ -9,8 +9,6 @@ namespace ET
 
         public int UserID { get; set; }
 
-        public int AddressID { get; set; }
-
         public string ContactName { get; set; }
 
         public int CostaRicaID { get; set; }
@@ -30,8 +28,6 @@ namespace ET
         public string Street { get; set; }
 
         public int PhoneNumber { get; set; }
-
-        public string Notes { get; set; }
 
         public bool PrimaryFlag { get; set; }
 

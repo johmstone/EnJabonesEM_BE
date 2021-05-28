@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ET;
 using DAL;
 
@@ -15,6 +11,16 @@ namespace BL
         public List<DeliveryAddress> List(int UserID)
         {
             return DADAL.List(UserID);
+        }
+
+        public bool Update(DeliveryAddress Detail, string InsertUser)
+        {
+            return DADAL.Update(Detail, InsertUser);
+        }
+
+        public bool AddNew(DeliveryAddress Detail, string InsertUser)
+        {
+            return DADAL.AddNew(Detail, InsertUser);
         }
     }
 }

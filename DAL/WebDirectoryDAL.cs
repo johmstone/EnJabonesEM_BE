@@ -18,6 +18,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspWebDirectorybyUser]", SqlCon)
                 {
@@ -60,6 +61,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspValidationRight]", SqlCon);
                 SqlCmd.CommandType = CommandType.StoredProcedure;
@@ -114,6 +116,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspReadWebDirectory]", SqlCon)
                 {
@@ -256,6 +259,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspUpdateWebDirectory]", SqlCon)
                 {

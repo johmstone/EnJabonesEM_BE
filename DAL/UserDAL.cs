@@ -205,6 +205,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspCheckUserEmailAvailability]", SqlCon)
                 {
@@ -236,6 +237,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspAddUser]", SqlCon)
                 {
@@ -306,7 +308,7 @@ namespace DAL
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             try
             {
-
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspLoginUser]", SqlCon)
                 {
@@ -357,6 +359,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspAddLogin]", SqlCon)
                 {
@@ -386,6 +389,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspReadUsers]", SqlCon);
                 SqlCmd.CommandType = CommandType.StoredProcedure;
@@ -430,6 +434,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspReadUsers]", SqlCon)
                 {
@@ -469,6 +474,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspGenerateEmailValidationToken]", SqlCon)
                 {
@@ -502,6 +508,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspValidateUserEmail]", SqlCon)
                 {
@@ -533,6 +540,7 @@ namespace DAL
 
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspGenerateGUIDResetPassword]", SqlCon)
                 {
@@ -573,6 +581,7 @@ namespace DAL
             int ValidCode;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspValidateGUIDResetPassword]", SqlCon)
                 {
@@ -604,6 +613,7 @@ namespace DAL
             bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspResetPassword]", SqlCon)
                 {

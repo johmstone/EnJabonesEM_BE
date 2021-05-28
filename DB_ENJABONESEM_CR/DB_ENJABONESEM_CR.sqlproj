@@ -121,11 +121,12 @@
     <Build Include="adm\Stored Procedures\uspValidateUserEmail.sql" />
     <Build Include="adm\Stored Procedures\uspValidationRight.sql" />
     <Build Include="adm\Stored Procedures\uspAdminResetPassword.sql" />
-    <Build Include="sal\Tables\utbAddresses.sql" />
     <Build Include="config\Tables\utbCostaRicaData.sql" />
     <Build Include="config\Stored Procedures\uspReadCRDataProvinces.sql" />
     <Build Include="config\Stored Procedures\uspReadCRDataCantons.sql" />
     <Build Include="config\Stored Procedures\uspReadCRDataDistrics.sql" />
     <Build Include="sal\Stored Procedures\uspReadDeliveryAddressByUser.sql" />
+    <Build Include="sal\Stored Procedures\uspUpdateDeliveryAddress.sql" />
+    <Build Include="sal\Stored Procedures\uspAddDeliveryAddress.sql" />
   </ItemGroup>
 </Project>

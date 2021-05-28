@@ -20,6 +20,7 @@ namespace EnJabonesEM_API.Controllers
     public class UsersController : ApiController
     {
         private UserBL UBL = new UserBL();
+        private DeliveryAddressBL DBL = new DeliveryAddressBL();
 
         [HttpPost]
         [ResponseType(typeof(List<User>))]
@@ -137,7 +138,68 @@ namespace EnJabonesEM_API.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
         }
-        
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/Users/DeliveryAddress/{UserID}")]
+        [ResponseType(typeof(List<DeliveryAddress>))]
+        public HttpResponseMessage Address(int UserID)
+        {
+            var r = DBL.List(UserID);
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            
+        }
+
+        [HttpPost]
+        [Route("api/Users/DeliveryAddress/Update")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage UpdateDeliveryAddress([FromBody] DeliveryAddress model)
+        {
+            var authHeader = this.Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = DBL.Update(model, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Users/DeliveryAddress/AddNew")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage AddNewDeliveryAddress([FromBody] DeliveryAddress model)
+        {
+            var authHeader = this.Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = DBL.AddNew(model, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
 
     }
 }

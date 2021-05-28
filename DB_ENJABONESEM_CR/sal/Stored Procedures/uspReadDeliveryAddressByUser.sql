@@ -22,7 +22,6 @@ AS
 
             -- =======================================================
 				SELECT	DA.[DeliveryAddressID]
-						,DA.[AddressID]
 						,DA.[ContactName]
 						,CR.[CostaRicaID]
 						,CR.[ProvinceID]
@@ -31,15 +30,14 @@ AS
 						,CR.[Canton]
 						,CR.[DistrictID]
 						,CR.[District]
-						,AD.[Street]
-						,AD.[PhoneNumber]
-						,AD.[Notes]
+						,DA.[Street]
+						,DA.[PhoneNumber]
 						,DA.[PrimaryFlag]
 				FROM	[sal].[utbDeliveryAddresses] DA
-						LEFT JOIN [sal].[utbAddresses] AD ON AD.[AddressID] = DA.[AddressID]
-						LEFT JOIN [config].[utbCostaRicaData] CR ON CR.[CostaRicaID] = AD.[CostaRicaID]
+						LEFT JOIN [config].[utbCostaRicaData] CR ON CR.[CostaRicaID] = DA.[CostaRicaID]
 				WHERE	[DA].[UserID] = @UserID
 						AND DA.[ActiveFlag] = 1
+				ORDER BY DA.[PrimaryFlag] DESC
 			-- =======================================================
 
         END TRY

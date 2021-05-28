@@ -1,9 +1,11 @@
 ﻿CREATE TABLE [sal].[utbDeliveryAddresses]
 (
-	[DeliveryAddressID] INT IDENTITY(1,1) NOT NULL,
+	[DeliveryAddressID] INT				IDENTITY(1,1) NOT NULL,
 	[UserID]			INT				NOT NULL,
-	[AddressID]			INT				NOT NULL,
 	[ContactName]		VARCHAR(50)		NOT NULL,
+	[PhoneNumber]		INT				NOT NULL,
+	[CostaRicaID]		INT				NOT NULL,
+	[Street]			VARCHAR(MAX)	NOT NULL,		
 	[PrimaryFlag]		BIT				CONSTRAINT [utbDeliveryAddressesDefaultPrimaryFlagTrue] DEFAULT ((0)) NOT NULL,	
 	[ActiveFlag]		BIT				CONSTRAINT [utbDeliveryAddressesDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[InsertDate]		DATETIME		CONSTRAINT [utbDeliveryAddressesDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
@@ -12,7 +14,7 @@
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbDeliveryAddressesDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
 	CONSTRAINT [utbDeliveryAddressID] PRIMARY KEY CLUSTERED ([DeliveryAddressID] ASC),
     CONSTRAINT [FK.adm.utbUsers.sal.utbDeliveryAddresses.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
-	CONSTRAINT [FK.sal.utbAddresses.sal.utbDeliveryAddresses.AddressID] FOREIGN KEY ([AddressID]) REFERENCES [sal].[utbAddresses] ([AddressID])
+	CONSTRAINT [FK.config.utbCostaRicaData.sal.utbDeliveryAddresses.AddressID] FOREIGN KEY ([CostaRicaID]) REFERENCES [config].[utbCostaRicaData] ([CostaRicaID])
 );
 
 GO

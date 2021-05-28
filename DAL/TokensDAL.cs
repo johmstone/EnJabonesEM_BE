@@ -13,11 +13,13 @@ namespace DAL
     public class TokensDAL
     {
         private SqlConnection SqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_Connection"].ToString());
+
         public bool AddNew(Token Detail)
         {
-            bool rpta = false;
+            bool rpta;
             try
             {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
                 SqlCon.Open();
                 var SqlCmd = new SqlCommand("[adm].[uspAddUserToken]", SqlCon)
                 {
