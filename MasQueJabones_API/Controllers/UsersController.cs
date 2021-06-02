@@ -13,10 +13,12 @@ using System.Web;
 using System.Configuration;
 using System.Net.Mail;
 using System.Text;
+using System.Web.Http.Cors;
 
 namespace MasQueJabones_API.Controllers
 {
     [ApiKeyAuthentication]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         private UserBL UBL = new UserBL();

@@ -131,6 +131,9 @@
     <Build Include="sal\Stored Procedures\uspReadFacturationInfoByUser.sql" />
     <Build Include="sal\Stored Procedures\uspAddFacturationInfo.sql" />
     <Build Include="sal\Stored Procedures\uspUpdateFacturationInfo.sql" />
+    <Build Include="config\Stored Procedures\uspReadPrimaryProducts.sql" />
+    <Build Include="config\Stored Procedures\uspAddPrimaryProduct.sql" />
+    <Build Include="config\Stored Procedures\uspUpdatePrimaryProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB_JABONES_CR.publish.xml" />
