@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [sal].[utbFacturationInfo]
 (
-	[FacurationInfoID]	INT				IDENTITY(1,1)	NOT NULL,
+	[FacturationInfoID]	INT				IDENTITY(1,1)	NOT NULL,
 	[UserID]			INT				NOT NULL,
 	[IdentityType]		VARCHAR(50)		NOT NULL,
 	[IdentityID]		VARCHAR(50)		NOT NULL,
@@ -14,7 +14,7 @@
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbFacturationInfoDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,
     [LastModifyDate]	DATETIME		CONSTRAINT [utbFacturationInfoDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbFacturationInfoDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
-	CONSTRAINT [utbFacurationInfoID] PRIMARY KEY CLUSTERED ([FacurationInfoID] ASC),
+	CONSTRAINT [utbFacturationInfoID] PRIMARY KEY CLUSTERED ([FacturationInfoID] ASC),
     CONSTRAINT [FK.adm.utbUsers.sal.utbFacturationInfo.UserID] FOREIGN KEY ([UserID]) REFERENCES [adm].[utbUsers] ([UserID]),
 	CONSTRAINT [FK.config.utbCostaRicaData.sal.utbFacturationInfo.AddressID] FOREIGN KEY ([CostaRicaID]) REFERENCES [config].[utbCostaRicaData] ([CostaRicaID])
 );

@@ -6,7 +6,7 @@
 	[OrderDate]			DATETIME		CONSTRAINT [utbOrdersDefaultOrderDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
 	[DeliveryID]		INT				NOT NULL,
 	[DeliveryAddressID]	INT				NOT NULL,
-	[FacurationInfoID]	INT				NOT NULL,
+	[FacturationInfoID]	INT				NOT NULL,
 	[Discount]			NUMERIC(5,2)	NOT NULL,
 	[StatusID]			INT				NOT NULL,
 	[ProofPayment]		VARCHAR(50)		NULL,
@@ -18,6 +18,6 @@
 	CONSTRAINT [utbOrderID] PRIMARY KEY CLUSTERED ([OrderID] ASC),
 	CONSTRAINT [FK.sal.utbDeliveryMethods.sal.utbOrders.DeliveryID] FOREIGN KEY ([DeliveryID]) REFERENCES [sal].[utbDeliveryMethods] ([DeliveryID]),
 	CONSTRAINT [FK.sal.utbDeliveryAddress.sal.utbOrders.DeliveryAddressID] FOREIGN KEY ([DeliveryAddressID]) REFERENCES [sal].[utbDeliveryAddresses] ([DeliveryAddressID]),
-	CONSTRAINT [FK.sal.utbFacturationInfo.sal.utbOrders.FacturationInfoID] FOREIGN KEY ([FacurationInfoID]) REFERENCES [sal].[utbFacturationInfo] ([FacurationInfoID]),
+	CONSTRAINT [FK.sal.utbFacturationInfo.sal.utbOrders.FacturationInfoID] FOREIGN KEY ([FacturationInfoID]) REFERENCES [sal].[utbFacturationInfo] ([FacturationInfoID]),
 	CONSTRAINT [FK.sal.utbOrderStatus.sal.utbOrders.StatusID] FOREIGN KEY ([StatusID]) REFERENCES [sal].[utbOrderStatus] ([StatusID]),
 );

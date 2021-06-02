@@ -21,6 +21,7 @@ namespace MasQueJabones_API.Controllers
     {
         private UserBL UBL = new UserBL();
         private DeliveryAddressBL DBL = new DeliveryAddressBL();
+        private FacturationInfoBL FBL = new FacturationInfoBL();
 
         [HttpPost]
         [ResponseType(typeof(List<User>))]
@@ -190,6 +191,68 @@ namespace MasQueJabones_API.Controllers
             var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
 
             var r = DBL.AddNew(model, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/Users/FacturationInfo/{UserID}")]
+        [ResponseType(typeof(List<FacturatioInfo>))]
+        public HttpResponseMessage FacturationInfo(int UserID)
+        {
+            var r = FBL.List(UserID);
+
+            return this.Request.CreateResponse(HttpStatusCode.OK, r);
+
+        }
+
+        [HttpPost]
+        [Route("api/Users/FacturationInfo/Update")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage UpdateFacturationInfo([FromBody] FacturatioInfo model)
+        {
+            var authHeader = this.Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = FBL.Update(model, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Users/FacturationInfo/AddNew")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage AddNewFacturationInfo([FromBody] FacturatioInfo model)
+        {
+            var authHeader = this.Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = FBL.AddNew(model, UserName);
 
             if (r)
             {

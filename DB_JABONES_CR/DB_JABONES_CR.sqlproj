@@ -128,5 +128,11 @@
     <Build Include="sal\Stored Procedures\uspReadDeliveryAddressByUser.sql" />
     <Build Include="sal\Stored Procedures\uspUpdateDeliveryAddress.sql" />
     <Build Include="sal\Stored Procedures\uspAddDeliveryAddress.sql" />
+    <Build Include="sal\Stored Procedures\uspReadFacturationInfoByUser.sql" />
+    <Build Include="sal\Stored Procedures\uspAddFacturationInfo.sql" />
+    <Build Include="sal\Stored Procedures\uspUpdateFacturationInfo.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DB_JABONES_CR.publish.xml" />
   </ItemGroup>
 </Project>
