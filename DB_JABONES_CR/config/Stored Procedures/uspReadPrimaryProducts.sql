@@ -21,16 +21,12 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	[PrimaryProductID]
-		                ,[Name]
-		                ,[Technique]
-                        ,[Description]
-		                ,[PhotoURL]
-		                ,[BrochureURL]
-		                ,[ActiveFlag]
-		                ,[VisibleFlag]
-                FROM	[config].[utbPrimaryProducts]
-                WHERE	[PrimaryProductID] = ISNULL(@PrimaryProductID,[PrimaryProductID])
+				SELECT	*
+				FROM	[config].[utbPrimaryProducts] PrimaryProducs
+						LEFT JOIN [sal].[utbProducts] Products ON Products.[PrimaryProductID] = PrimaryProducs.[PrimaryProductID]
+						LEFT JOIN [config].[utbUnits] Unit ON Unit.[UnitID] = Products.[UnitID]
+				WHERE	PrimaryProducs.[PrimaryProductID] = ISNULL(@PrimaryProductID,PrimaryProducs.[PrimaryProductID])
+				FOR JSON AUTO
 			-- =======================================================
 
         END TRY

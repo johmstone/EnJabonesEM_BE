@@ -15,7 +15,7 @@ CREATE PROCEDURE [config].[uspAddPrimaryProduct]
     @Name           VARCHAR(100),
     @Description    VARCHAR(1000),
     @Technique      VARCHAR(100) = NULL,
-    @PhotoURL       VARCHAR(500) = NULL,
+    @PhotoURL       VARCHAR(500),
     @BrochureURL    VARCHAR(500) = NULL,
     @VisibleFlag    BIT = NULL
 AS 

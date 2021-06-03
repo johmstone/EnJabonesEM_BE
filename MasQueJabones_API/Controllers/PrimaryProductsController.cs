@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
+using Newtonsoft.Json.Linq;
 using ET;
 using BL;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,9 +19,20 @@ namespace MasQueJabones_API.Controllers
     {
         private PrimaryProductsBL PPBL = new PrimaryProductsBL();
 
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ResponseType(typeof(List<PrimaryProduct>))]
+        //public HttpResponseMessage List()
+        //{
+        //    var r = PPBL.List();
+
+        //    return this.Request.CreateResponse(HttpStatusCode.OK, r);
+
+        //}
+
         [HttpPost]
         [AllowAnonymous]
-        [ResponseType(typeof(List<PrimaryProduct>))]
+        [ResponseType(typeof(IEnumerable<PrimaryProduct>))]
         public HttpResponseMessage List()
         {
             var r = PPBL.List();

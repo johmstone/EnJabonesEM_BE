@@ -38,15 +38,16 @@ AS
                 END
 
             -- =======================================================
-                IF(@ActionType = 'CHGST')
+                DECLARE @ActiveFlag BIT
+				IF(@ActionType = 'CHGST')
                     BEGIN
-                        DECLARE @ActiveFlag BIT
                         SELECT  @ActiveFlag = [ActiveFlag]
                         FROM    [config].[utbPrimaryProducts]
                         WHERE   [PrimaryProductID] = @PrimaryProductID
 
                         UPDATE  [config].[utbPrimaryProducts]
                         SET     [ActiveFlag]        = CASE WHEN @ActiveFlag = 1 THEN 0 ELSE 1 END
+								,[VisibleFlag]		= CASE WHEN @ActiveFlag = 1 THEN 0 ELSE [VisibleFlag] END
                                 ,[LastModifyDate]   = GETDATE()
                                 ,[LastModifyUser]   = @InsertUser
                         WHERE   [PrimaryProductID]  = @PrimaryProductID
@@ -56,11 +57,14 @@ AS
                         IF(@ActionType = 'CHGVS')
                             BEGIN
                                 SELECT  @VisibleFlag = [VisibleFlag]
+										,@ActiveFlag = [ActiveFlag]
                                 FROM    [config].[utbPrimaryProducts]
                                 WHERE   [PrimaryProductID] = @PrimaryProductID
 
                                 UPDATE  [config].[utbPrimaryProducts]
-                                SET     [VisibleFlag]       = CASE WHEN @VisibleFlag = 1 THEN 0 ELSE 1 END
+                                SET     [VisibleFlag]       = CASE WHEN @VisibleFlag = 0 THEN 1 ELSE 0 END
+										,[ActiveFlag]		= CASE WHEN @VisibleFlag = 0 AND @ActiveFlag = 0 THEN 1
+																   ELSE [ActiveFlag] END
                                         ,[LastModifyDate]   = GETDATE()
                                         ,[LastModifyUser]   = @InsertUser
                                 WHERE   [PrimaryProductID]  = @PrimaryProductID

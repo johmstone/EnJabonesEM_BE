@@ -4,7 +4,7 @@
 	[Name]				VARCHAR(100)	NOT NULL,
 	[Description]		VARCHAR(1000)	NOT NULL,
 	[Technique]			VARCHAR(100)	NULL,	
-	[PhotoURL]			VARCHAR(500)	NULL,
+	[PhotoURL]			VARCHAR(500)	NOT NULL,
 	[BrochureURL]		VARCHAR(500)	NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbPrimaryProductsDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
 	[VisibleFlag]		BIT				CONSTRAINT [utbPrimaryProductsDefaultVisibleFlagTrue] DEFAULT ((1)) NOT NULL,	

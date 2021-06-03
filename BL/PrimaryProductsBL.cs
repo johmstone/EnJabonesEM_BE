@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using ET;
 using DAL;
 
@@ -8,10 +9,16 @@ namespace BL
     {
         private PrimaryProductsDAL PPDAL = new PrimaryProductsDAL();
 
-        public List<PrimaryProduct> List()
+        //public List<PrimaryProduct> List()
+        //{
+        //    return PPDAL.List();
+        //}
+
+        public IEnumerable<PrimaryProduct> List()
         {
             return PPDAL.List();
         }
+
 
         public bool Update(PrimaryProduct Detail, string InsertUser)
         {

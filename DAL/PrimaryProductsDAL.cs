@@ -1,18 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using ET;
+using Newtonsoft.Json;
 
 namespace DAL
 {
     public class PrimaryProductsDAL
     {
         private SqlConnection SqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_Connection"].ToString());
-        public List<PrimaryProduct> List()
+        //public List<PrimaryProduct> List()
+        //{
+        //    List<PrimaryProduct> List = new List<PrimaryProduct>();
+
+        //    try
+        //    {
+        //        if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+        //        SqlCon.Open();
+        //        var SqlCmd = new SqlCommand("[config].[uspReadPrimaryProducts]", SqlCon)
+        //        {
+        //            CommandType = CommandType.StoredProcedure
+        //        };
+
+        //        using (var dr = SqlCmd.ExecuteReader())
+        //        {
+        //            while (dr.Read())
+        //            {
+        //                var detail = new PrimaryProduct
+        //                {
+        //                    PrimaryProductID = Convert.ToInt32(dr["PrimaryProductID"]),
+        //                    Name = dr["Name"].ToString(),
+        //                    Description = dr["Description"].ToString(),
+        //                    Technique = dr["Technique"].ToString(),
+        //                    PhotoURL = dr["PhotoURL"].ToString(),
+        //                    BrochureURL = dr["BrochureURL"].ToString(),
+        //                    ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]),
+        //                    VisibleFlag = Convert.ToBoolean(dr["VisibleFlag"])
+        //                };
+        //                List.Add(detail);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //    if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+        //    return List;
+        //}
+
+        public IEnumerable<PrimaryProduct> List()
         {
-            List<PrimaryProduct> List = new List<PrimaryProduct>();
+            IEnumerable<PrimaryProduct> List;
 
             try
             {
@@ -23,34 +65,19 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
-                using (var dr = SqlCmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        var detail = new PrimaryProduct
-                        {
-                            PrimaryProductID = Convert.ToInt32(dr["PrimaryProductID"]),
-                            Name = dr["Name"].ToString(),
-                            Description = dr["Description"].ToString(),
-                            Technique = dr["Technique"].ToString(),
-                            PhotoURL = dr["PhotoURL"].ToString(),
-                            BrochureURL = dr["BrochureURL"].ToString(),
-                            ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]),
-                            VisibleFlag = Convert.ToBoolean(dr["VisibleFlag"])
-                        };
-                        List.Add(detail);
-                    }
-                }
+                List = JsonConvert.DeserializeObject<List<PrimaryProduct>>((string)SqlCmd.ExecuteScalar());
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+
             return List;
         }
 
-        public bool Update(PrimaryProduct Detail, string InsertUser)
+
+            public bool Update(PrimaryProduct Detail, string InsertUser)
         {
             bool rpta;
             try
