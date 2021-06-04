@@ -21,11 +21,30 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	*
-				FROM	[config].[utbPrimaryProducts] PrimaryProducs
-						LEFT JOIN [sal].[utbProducts] Products ON Products.[PrimaryProductID] = PrimaryProducs.[PrimaryProductID]
+				SELECT	PrimaryProducts.[PrimaryProductID]
+						,PrimaryProducts.[Name]
+						,PrimaryProducts.[Description]
+						,PrimaryProducts.[Technique]
+						,PrimaryProducts.[PhotoURL]
+						,PrimaryProducts.[BrochureURL]
+						,PrimaryProducts.[ActiveFlag]
+						,PrimaryProducts.[VisibleFlag]
+						,Products.[ProductID]
+						,Products.[PrimaryProductID]
+						,Products.[Qty]
+						,Products.[UnitID]
+						,Products.[Price]
+						,Products.[IVA]
+						,Products.[Discount]
+						,Products.[ActiveFlag]
+						,Products.[VisibleFlag]
+						,Unit.[UnitID]
+						,Unit.[UnitName]
+						,Unit.[Symbol]
+				FROM	[config].[utbPrimaryProducts] PrimaryProducts
+						LEFT JOIN [sal].[utbProducts] Products ON Products.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]
 						LEFT JOIN [config].[utbUnits] Unit ON Unit.[UnitID] = Products.[UnitID]
-				WHERE	PrimaryProducs.[PrimaryProductID] = ISNULL(@PrimaryProductID,PrimaryProducs.[PrimaryProductID])
+				WHERE	PrimaryProducts.[PrimaryProductID] = ISNULL(@PrimaryProductID,PrimaryProducts.[PrimaryProductID])
 				FOR JSON AUTO
 			-- =======================================================
 

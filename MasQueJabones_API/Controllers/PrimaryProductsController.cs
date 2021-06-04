@@ -19,17 +19,6 @@ namespace MasQueJabones_API.Controllers
     {
         private PrimaryProductsBL PPBL = new PrimaryProductsBL();
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ResponseType(typeof(List<PrimaryProduct>))]
-        //public HttpResponseMessage List()
-        //{
-        //    var r = PPBL.List();
-
-        //    return this.Request.CreateResponse(HttpStatusCode.OK, r);
-
-        //}
-
         [HttpPost]
         [AllowAnonymous]
         [ResponseType(typeof(IEnumerable<PrimaryProduct>))]
@@ -38,6 +27,44 @@ namespace MasQueJabones_API.Controllers
             var r = PPBL.List();
 
             return this.Request.CreateResponse(HttpStatusCode.OK, r);
+
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/PrimaryProducts/{PrimaryProductID}")]
+        [ResponseType(typeof(PrimaryProduct))]
+        public HttpResponseMessage Formula(int PrimaryProductID)
+        {
+            var r = PPBL.Details(PrimaryProductID);
+
+            if (r.PrimaryProductID > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/PrimaryProducts/Formula/{PrimaryProductID}")]
+        [ResponseType(typeof(List<Formula>))]
+        public HttpResponseMessage Formula(int PrimaryProductID)
+        {
+            var r = PPBL.Formula(PrimaryProductID);
+
+            if (r.Count() > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
 
         }
 

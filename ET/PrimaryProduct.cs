@@ -36,5 +36,8 @@ namespace ET
 
         [JsonProperty("Products")]
         public List<Product> Products { get; set; }
+
+        [JsonProperty("Formula")]
+        public List<Formula> Formula { get; set; }
     }
 }

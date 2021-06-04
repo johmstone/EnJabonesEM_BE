@@ -134,6 +134,7 @@
     <Build Include="config\Stored Procedures\uspReadPrimaryProducts.sql" />
     <Build Include="config\Stored Procedures\uspAddPrimaryProduct.sql" />
     <Build Include="config\Stored Procedures\uspUpdatePrimaryProduct.sql" />
+    <Build Include="config\Stored Procedures\uspReadFormulas.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB_JABONES_CR.publish.xml" />

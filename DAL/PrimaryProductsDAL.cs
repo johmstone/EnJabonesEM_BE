@@ -1,57 +1,17 @@
-﻿using System;
+﻿using ET;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using ET;
-using Newtonsoft.Json;
 
 namespace DAL
 {
     public class PrimaryProductsDAL
     {
         private SqlConnection SqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_Connection"].ToString());
-        //public List<PrimaryProduct> List()
-        //{
-        //    List<PrimaryProduct> List = new List<PrimaryProduct>();
-
-        //    try
-        //    {
-        //        if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-        //        SqlCon.Open();
-        //        var SqlCmd = new SqlCommand("[config].[uspReadPrimaryProducts]", SqlCon)
-        //        {
-        //            CommandType = CommandType.StoredProcedure
-        //        };
-
-        //        using (var dr = SqlCmd.ExecuteReader())
-        //        {
-        //            while (dr.Read())
-        //            {
-        //                var detail = new PrimaryProduct
-        //                {
-        //                    PrimaryProductID = Convert.ToInt32(dr["PrimaryProductID"]),
-        //                    Name = dr["Name"].ToString(),
-        //                    Description = dr["Description"].ToString(),
-        //                    Technique = dr["Technique"].ToString(),
-        //                    PhotoURL = dr["PhotoURL"].ToString(),
-        //                    BrochureURL = dr["BrochureURL"].ToString(),
-        //                    ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]),
-        //                    VisibleFlag = Convert.ToBoolean(dr["VisibleFlag"])
-        //                };
-        //                List.Add(detail);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-        //    return List;
-        //}
-
+        
         public IEnumerable<PrimaryProduct> List()
         {
             IEnumerable<PrimaryProduct> List;
@@ -76,8 +36,77 @@ namespace DAL
             return List;
         }
 
+        public PrimaryProduct Details(int PrimaryProductID)
+        {
+            PrimaryProduct Details;
 
-            public bool Update(PrimaryProduct Detail, string InsertUser)
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[config].[uspReadPrimaryProducts]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                var x = JsonConvert.DeserializeObject<List<PrimaryProduct>>((string)SqlCmd.ExecuteScalar());
+                Details = x[0];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+
+            return Details;
+        }
+
+        public List<Formula> Formula(int PrimaryProductID)
+        {
+            List<Formula> List = new List<Formula>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[config].[uspReadFormulas]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlCmd.Parameters.AddWithValue("@PrimaryProductID", PrimaryProductID);
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new Formula
+                        {
+                            FormulaID = Convert.ToInt32(dr["FormulaID"]),
+                            PrimaryProductID = Convert.ToInt32(dr["PrimaryProductID"]),
+                            IngredientID = Convert.ToInt32(dr["IngredientID"]),
+                            IngredientName = dr["IngredientName"].ToString(),
+                            TypeName = dr["TypeName"].ToString(),
+                            Qty = Convert.ToDecimal(dr["FormulaID"]),
+                            UnitID = Convert.ToInt32(dr["UnitID"]),
+                            UnitName = dr["UnitName"].ToString(),
+                            Symbol = dr["Symbol"].ToString()
+                        };
+                        List.Add(detail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+
+            return List;
+        }
+
+
+        public bool Update(PrimaryProduct Detail, string InsertUser)
         {
             bool rpta;
             try

@@ -9,14 +9,19 @@ namespace BL
     {
         private PrimaryProductsDAL PPDAL = new PrimaryProductsDAL();
 
-        //public List<PrimaryProduct> List()
-        //{
-        //    return PPDAL.List();
-        //}
-
         public IEnumerable<PrimaryProduct> List()
         {
             return PPDAL.List();
+        }
+
+        public PrimaryProduct Details (int PrimaryProductID)
+        {
+            return PPDAL.Details(PrimaryProductID);
+        }
+
+        public List<Formula> Formula(int PrimaryProductID)
+        {
+            return PPDAL.Formula(PrimaryProductID);
         }
 
 
