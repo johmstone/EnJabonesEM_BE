@@ -76,10 +76,10 @@
     <Build Include="adm\Tables\utbUserTokens.sql" />
     <Build Include="adm\Tables\utbWebDirectory.sql" />
     <Build Include="config\Tables\utbFormulas.sql" />
-    <Build Include="config\Tables\utbIngredientProperties.sql" />
+    <Build Include="config\Tables\utbProductProperties.sql" />
     <Build Include="config\Tables\utbIngredients.sql" />
     <Build Include="config\Tables\utbIngredientTypes.sql" />
-    <Build Include="config\Tables\utbIngredientUses.sql" />
+    <Build Include="config\Tables\utbProductUses.sql" />
     <Build Include="config\Tables\utbPrimaryProducts.sql" />
     <Build Include="config\Tables\utbProperties.sql" />
     <Build Include="config\Tables\utbUnits.sql" />

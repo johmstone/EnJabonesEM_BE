@@ -34,7 +34,7 @@ namespace MasQueJabones_API.Controllers
         [ApiKeyAuthentication]
         [Route("api/PrimaryProducts/{PrimaryProductID}")]
         [ResponseType(typeof(PrimaryProduct))]
-        public HttpResponseMessage Formula(int PrimaryProductID)
+        public HttpResponseMessage Details(int PrimaryProductID)
         {
             var r = PPBL.Details(PrimaryProductID);
 

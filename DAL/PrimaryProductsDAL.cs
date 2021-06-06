@@ -49,8 +49,11 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
+                SqlCmd.Parameters.AddWithValue("@PrimaryProductID", PrimaryProductID);
+
                 var x = JsonConvert.DeserializeObject<List<PrimaryProduct>>((string)SqlCmd.ExecuteScalar());
                 Details = x[0];
+                Details.Formula = Formula(PrimaryProductID);
             }
             catch (Exception ex)
             {
@@ -87,7 +90,7 @@ namespace DAL
                             IngredientID = Convert.ToInt32(dr["IngredientID"]),
                             IngredientName = dr["IngredientName"].ToString(),
                             TypeName = dr["TypeName"].ToString(),
-                            Qty = Convert.ToDecimal(dr["FormulaID"]),
+                            Qty = Convert.ToDecimal(dr["Qty"]),
                             UnitID = Convert.ToInt32(dr["UnitID"]),
                             UnitName = dr["UnitName"].ToString(),
                             Symbol = dr["Symbol"].ToString()
