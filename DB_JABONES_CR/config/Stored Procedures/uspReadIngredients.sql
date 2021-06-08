@@ -29,7 +29,7 @@ AS
                 FROM	[config].[utbIngredients] I
 		                LEFT JOIN [config].[utbIngredientTypes] T ON T.[TypeID] = I.[TypeID]		
 				WHERE	I.[TypeID] = ISNULL(@TypeID, I.[TypeID])
-                ORDER BY I.[IngredientName]
+                ORDER BY T.[TypeName], I.[IngredientName]
 			-- =======================================================
 
         END TRY

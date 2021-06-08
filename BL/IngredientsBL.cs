@@ -27,6 +27,11 @@ namespace BL
             return IDAL.Units();
         }
 
+        public List<IngredientType> Types()
+        {
+            return IDAL.Types();
+        }
+
         public bool AddNewUnit(Unit details, string InsertUser)
         {
             return IDAL.AddNewUnit(details, InsertUser);

@@ -77,6 +77,23 @@ namespace MasQueJabones_API.Controllers
         }
 
         [HttpPost]
+        [Route("api/Ingredients/Types")]
+        [ResponseType(typeof(List<IngredientType>))]
+        public HttpResponseMessage Types()
+        {
+            var r = IBL.Types();
+
+            if (r.Count() > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
         [Route("api/Ingredients/AddNewUnit")]
         [ResponseType(typeof(bool))]
         public HttpResponseMessage AddNewUnit([FromBody] Unit model)

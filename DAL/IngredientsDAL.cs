@@ -191,5 +191,39 @@ namespace DAL
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             return rpta;
         }
+
+        public List<IngredientType> Types()
+        {
+            List<IngredientType> List = new List<IngredientType>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[config].[uspReadIngredientTypes]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new IngredientType
+                        {
+                            TypeID = Convert.ToInt32(dr["TypeID"]),
+                            TypeName = dr["TypeName"].ToString()
+                        };
+                        List.Add(detail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
+        }
     }
 }
