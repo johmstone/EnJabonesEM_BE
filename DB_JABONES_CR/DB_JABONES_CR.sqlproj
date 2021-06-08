@@ -140,6 +140,7 @@
     <Build Include="config\Stored Procedures\uspAddIngredient.sql" />
     <Build Include="config\Stored Procedures\uspAddFormulaProduct.sql" />
     <Build Include="config\Stored Procedures\uspReadUnits.sql" />
+    <Build Include="config\Stored Procedures\uspUpdateFormulaProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB_JABONES_CR.publish.xml" />

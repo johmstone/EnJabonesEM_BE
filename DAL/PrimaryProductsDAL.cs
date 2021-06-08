@@ -137,6 +137,35 @@ namespace DAL
             return rpta;
         }
 
+        public bool UpdateFormula(PrimaryProduct Detail, string InsertUser)
+        {
+            bool rpta;
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[config].[uspUpdateFormulaProduct]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlCmd.Parameters.AddWithValue("@InsertUser", InsertUser);
+                SqlCmd.Parameters.AddWithValue("@JSON", JsonConvert.SerializeObject(Detail.Formula));
+
+                //Exec Command
+                SqlCmd.ExecuteNonQuery();
+
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
+
         public bool Update(PrimaryProduct Detail, string InsertUser)
         {
             bool rpta;
