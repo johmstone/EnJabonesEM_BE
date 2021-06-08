@@ -11,6 +11,8 @@ namespace ET
 
         public int TypeID { get; set; }
 
+        public string TypeName { get; set; }
+
         public string PhotoURL { get; set; }
 
         public string ActionType { get; set; }

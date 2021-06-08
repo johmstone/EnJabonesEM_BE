@@ -48,6 +48,7 @@
     <Compile Include="CostaRicaDataDAL.cs" />
     <Compile Include="DeliveryAddressDAL.cs" />
     <Compile Include="FacturationInfoDAL.cs" />
+    <Compile Include="IngredientsDAL.cs" />
     <Compile Include="PrimaryProductsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightsDAL.cs" />

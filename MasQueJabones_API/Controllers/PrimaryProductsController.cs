@@ -70,6 +70,33 @@ namespace MasQueJabones_API.Controllers
 
         [HttpPost]
         [ApiKeyAuthentication]
+        [Route("api/PrimaryProducts/Formula/AddNew")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage AddFormula([FromBody] PrimaryProduct Details)
+        {
+            var authHeader = this.Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = PPBL.AddFormula(Details, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
         [Route("api/PrimaryProducts/Update")]
         [ResponseType(typeof(bool))]
         public HttpResponseMessage Update([FromBody] PrimaryProduct model)

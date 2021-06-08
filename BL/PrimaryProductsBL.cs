@@ -24,6 +24,10 @@ namespace BL
             return PPDAL.Formula(PrimaryProductID);
         }
 
+        public bool AddFormula(PrimaryProduct Detail, string InsertUser)
+        {
+            return PPDAL.AddFormula(Detail, InsertUser);
+        }
 
         public bool Update(PrimaryProduct Detail, string InsertUser)
         {
