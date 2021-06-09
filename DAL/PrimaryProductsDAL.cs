@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace DAL
 {
@@ -25,7 +26,14 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
-                List = JsonConvert.DeserializeObject<List<PrimaryProduct>>((string)SqlCmd.ExecuteScalar());
+                SqlDataReader reader = SqlCmd.ExecuteReader(); 
+                StringBuilder sb = new StringBuilder();
+                while (reader.Read()) 
+                { 
+                    sb.Append(reader.GetSqlString(0).Value); 
+                }
+
+                List = JsonConvert.DeserializeObject<List<PrimaryProduct>>(sb.ToString());
             }
             catch (Exception ex)
             {

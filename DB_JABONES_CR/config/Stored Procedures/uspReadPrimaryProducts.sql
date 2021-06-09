@@ -29,21 +29,23 @@ AS
 						,PrimaryProducts.[BrochureURL]
 						,PrimaryProducts.[ActiveFlag]
 						,PrimaryProducts.[VisibleFlag]
-						,Products.[ProductID]
-						,Products.[PrimaryProductID]
-						,Products.[Qty]
-						,Products.[UnitID]
-						,Products.[Price]
-						,Products.[IVA]
-						,Products.[Discount]
-						,Products.[ActiveFlag]
-						,Products.[VisibleFlag]
-						,Unit.[UnitID]
-						,Unit.[UnitName]
-						,Unit.[Symbol]
+						,Products.*
 				FROM	[config].[utbPrimaryProducts] PrimaryProducts
-						LEFT JOIN [sal].[utbProducts] Products ON Products.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]
-						LEFT JOIN [config].[utbUnits] Unit ON Unit.[UnitID] = Products.[UnitID]
+						OUTER APPLY (SELECT P.[ProductID]
+											,P.[PrimaryProductID]
+											,P.[Qty]
+											,P.[UnitID]
+											,P.[Price]
+											,P.[IVA]
+											,P.[Discount]
+											,P.[ActiveFlag]
+											,P.[VisibleFlag]
+											,U.[UnitName]
+											,U.[Symbol]
+									 FROM	[sal].[utbProducts] P
+											LEFT JOIN [config].[utbUnits] U ON U.[UnitID] = P.[UnitID]
+									 WHERE	P.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]) Products						
+						
 				WHERE	PrimaryProducts.[PrimaryProductID] = ISNULL(@PrimaryProductID,PrimaryProducts.[PrimaryProductID])
 				FOR JSON AUTO
 			-- =======================================================

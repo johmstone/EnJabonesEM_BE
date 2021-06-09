@@ -19,6 +19,12 @@ namespace ET
         [JsonProperty("UnitID")]
         public int UnitID { get; set; }
 
+        [JsonProperty("UnitName")]
+        public string UnitName { get; set; }
+
+        [JsonProperty("Symbol")]
+        public string Symbol { get; set; }
+
         [JsonProperty("Price")]
         public decimal Price { get; set; }
 
@@ -37,8 +43,7 @@ namespace ET
         [JsonProperty("ActionType")]
         public string ActionType { get; set; }
 
-        [JsonProperty("Unit")]
-        public List<Unit> Unit { get; set; }
+        
 
     }
 }
