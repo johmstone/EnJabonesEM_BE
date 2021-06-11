@@ -50,6 +50,7 @@
     <Compile Include="FacturationInfoDAL.cs" />
     <Compile Include="IngredientsDAL.cs" />
     <Compile Include="PrimaryProductsDAL.cs" />
+    <Compile Include="ProductsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightsDAL.cs" />
     <Compile Include="RolesDAL.cs" />

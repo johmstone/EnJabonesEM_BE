@@ -49,6 +49,7 @@
     <Compile Include="FacturationInfoBL.cs" />
     <Compile Include="IngredientsBL.cs" />
     <Compile Include="PrimaryProductsBL.cs" />
+    <Compile Include="ProductsBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightsBL.cs" />
     <Compile Include="RolesBL.cs" />
