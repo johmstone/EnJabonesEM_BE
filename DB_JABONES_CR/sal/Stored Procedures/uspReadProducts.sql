@@ -50,6 +50,8 @@ AS
 				WHERE	Products.[ProductID] IS NOT NULL
 						AND PrimaryProducts.[ActiveFlag] = 1
 						AND PrimaryProducts.[VisibleFlag] = 1
+				ORDER BY	PrimaryProducts.[Name]
+							,Products.[Price]
 				FOR JSON AUTO
 			-- =======================================================
 

@@ -24,7 +24,7 @@ namespace BL
 
         public bool Update(Product product, string insertuser)
         {
-            return PDAL.AddNew(product, insertuser);
+            return PDAL.Update(product, insertuser);
         }
 
     }
