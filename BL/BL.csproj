@@ -48,6 +48,7 @@
     <Compile Include="DeliveryAddressBL.cs" />
     <Compile Include="FacturationInfoBL.cs" />
     <Compile Include="IngredientsBL.cs" />
+    <Compile Include="OrdersBL.cs" />
     <Compile Include="PrimaryProductsBL.cs" />
     <Compile Include="ProductsBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

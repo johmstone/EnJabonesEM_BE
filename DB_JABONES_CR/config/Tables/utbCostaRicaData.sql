@@ -6,5 +6,6 @@
 	[CantonID]			INT			NOT NULL,
 	[Canton]			VARCHAR(25)	NOT NULL,
 	[DistrictID]		INT			NOT NULL,
-	[District]			VARCHAR(50)	NOT NULL
+	[District]			VARCHAR(50)	NOT NULL,
+	[GAMFlag]			BIT			CONSTRAINT [utbCostaRicaDataDefaultGAMFlagFalse] DEFAULT ((0)) NOT NULL
 )

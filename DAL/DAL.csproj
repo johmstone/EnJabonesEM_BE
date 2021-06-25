@@ -49,6 +49,7 @@
     <Compile Include="DeliveryAddressDAL.cs" />
     <Compile Include="FacturationInfoDAL.cs" />
     <Compile Include="IngredientsDAL.cs" />
+    <Compile Include="OrdersDAL.cs" />
     <Compile Include="PrimaryProductsDAL.cs" />
     <Compile Include="ProductsDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

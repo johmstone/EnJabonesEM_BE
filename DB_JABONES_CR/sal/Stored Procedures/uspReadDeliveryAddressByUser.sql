@@ -33,6 +33,7 @@ AS
 						,DA.[Street]
 						,DA.[PhoneNumber]
 						,DA.[PrimaryFlag]
+						,CR.[GAMFlag]
 				FROM	[sal].[utbDeliveryAddresses] DA
 						LEFT JOIN [config].[utbCostaRicaData] CR ON CR.[CostaRicaID] = DA.[CostaRicaID]
 				WHERE	[DA].[UserID] = @UserID

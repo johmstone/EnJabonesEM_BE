@@ -3,6 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ET
 {
+
+    public class StagingOrder
+    {
+        public string StagingOrderID { get; set; }
+
+        public int UserID { get; set; }
+
+        public int DeliveryID { get; set; }
+
+        public string OrderDetails { get; set; }
+
+        public DateTime OrderDate { get; set; }
+    }
+
     public class Order
     {
         [Key]

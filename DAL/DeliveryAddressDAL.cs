@@ -44,6 +44,7 @@ namespace DAL
                             Street = dr["Street"].ToString(),
                             PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
                             PrimaryFlag = Convert.ToBoolean(dr["PrimaryFlag"]),
+                            GAMFlag = Convert.ToBoolean(dr["GAMFlag"]),
                             ActiveFlag = true
                         };
                         List.Add(detail);

@@ -36,7 +36,8 @@ namespace DAL
                         {
                             CostaRicaID = Convert.ToInt32(dr["CostaRicaID"]),
                             DistrictID = Convert.ToInt32(dr["DistrictID"]),
-                            District = dr["District"].ToString()
+                            District = dr["District"].ToString(),
+                            GAMFlag = Convert.ToBoolean(dr["GAMFlag"])
                         };
                         List.Add(detail);
                     }

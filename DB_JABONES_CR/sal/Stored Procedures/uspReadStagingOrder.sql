@@ -1,8 +1,8 @@
 ﻿-- ======================================================================
--- Name: [config].[uspReadCRDataDistrics]
--- Desc: Retorna los distitos por canton y provincia
+-- Name: [sal].[uspReadStagingOrder]
+-- Desc: Retorna las información de Ordenes en proceso de pedido
 -- Auth: Jonathan Piedra johmstone@gmail.com
--- Date: 05/26/2021
+-- Date: 06/01/2021
 -------------------------------------------------------------
 -- Change History
 -------------------------------------------------------------
@@ -10,9 +10,8 @@
 -- --	----		------		-----------------------------
 -- ======================================================================
 
-CREATE PROCEDURE [config].[uspReadCRDataDistrics]
-    @ProvinceID INT
-    ,@CantonID  INT
+CREATE PROCEDURE [sal].[uspReadStagingOrder]
+    @StagingOrderID VARCHAR(50)
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -22,13 +21,13 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	[CostaRicaID]
-		                ,[DistrictID]
-		                ,[District]
-                        ,[GAMFlag]
-                FROM	[config].[utbCostaRicaData]
-                WHERE	[ProvinceID] = @ProvinceID
-		                AND [CantonID] = @CantonID
+				SELECT  [StageOrderID]
+                        ,[UserID]
+                        ,[OrderDate]
+                        ,[OrderDetails]
+                        ,[DeliveryID]
+                FROM    [sal].[utbStagingOrders]
+                WHERE   [StageOrderID] = @StagingOrderID
 			-- =======================================================
 
         END TRY

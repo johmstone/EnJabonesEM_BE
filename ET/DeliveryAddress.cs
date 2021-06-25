@@ -27,6 +27,8 @@ namespace ET
 
         public string Street { get; set; }
 
+        public bool GAMFlag { get; set; }
+
         public int PhoneNumber { get; set; }
 
         public bool PrimaryFlag { get; set; }

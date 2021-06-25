@@ -13,6 +13,8 @@ namespace ET
         public int DistrictID { get; set; }
 
         public string District { get; set; }
+
+        public bool GAMFlag { get; set; }
     }
 
     public class CostaRicaCantons
