@@ -6,6 +6,7 @@
 	[IdentityID]		VARCHAR(50)		NOT NULL,
 	[FullName]			VARCHAR(50)		NOT NULL,
 	[PhoneNumber]		INT				NOT NULL,
+	[Email]				VARCHAR(50)		NOT NULL,
 	[CostaRicaID]		INT				NOT NULL,
 	[Street]			VARCHAR(MAX)	NOT NULL,
 	[PrimaryFlag]		BIT				CONSTRAINT [utbFacturationInfoDefaultPrimaryFlagTrue] DEFAULT ((0)) NOT NULL,	

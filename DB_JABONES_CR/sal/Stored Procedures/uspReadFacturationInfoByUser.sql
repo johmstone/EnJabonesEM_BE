@@ -27,6 +27,7 @@ AS
 						,FI.[IdentityID]
 						,FI.[FullName]
 						,FI.[PhoneNumber]
+						,FI.[Email]
 						,FI.[CostaRicaID]
 						,CR.[ProvinceID]
 						,CR.[Province]

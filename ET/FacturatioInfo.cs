@@ -17,6 +17,8 @@ namespace ET
 
         public int PhoneNumber { get; set; }
 
+        public string Email { get; set; }
+
         public int CostaRicaID { get; set; }
 
         public int ProvinceID { get; set; }

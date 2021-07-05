@@ -14,9 +14,10 @@ CREATE PROCEDURE [sal].[uspAddFacturationInfo]
 	@InsertUser		VARCHAR(50),
     @UserID         INT,
     @IdentityType   VARCHAR(50),
-    @IdentityID    VARCHAR(50),
+    @IdentityID     VARCHAR(50),
     @FullName       VARCHAR(50),
     @PhoneNumber    INT,
+    @Email          VARCHAR(50),
     @CostaRicaID    INT,
     @Street         VARCHAR(MAX)
 AS 
@@ -39,13 +40,13 @@ AS
             -- =======================================================
                 IF EXISTS (SELECT * FROM [sal].[utbFacturationInfo] WHERE [UserID] = @UserID AND [PrimaryFlag] = 1 AND [ActiveFlag] = 1)
                     BEGIN
-                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[CostaRicaID],[Street],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
-                        VALUES (@UserID, @IdentityType, @IdentityID, @FullName, @PhoneNumber, @CostaRicaID, @Street, GETDATE(), @InsertUser, GETDATE(), @InsertUser)
+                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[Email],[CostaRicaID],[Street],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
+                        VALUES (@UserID, @IdentityType, @IdentityID, @FullName, @PhoneNumber, @Email, @CostaRicaID, @Street, GETDATE(), @InsertUser, GETDATE(), @InsertUser)
                     END
                 ELSE
                     BEGIN
-                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[CostaRicaID],[Street],[PrimaryFlag],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
-                        VALUES (@UserID, @IdentityType, @IdentityID, @FullName, @PhoneNumber, @CostaRicaID, @Street, 1, GETDATE(), @InsertUser, GETDATE(), @InsertUser)
+                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[Email],[CostaRicaID],[Street],[PrimaryFlag],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
+                        VALUES (@UserID, @IdentityType, @IdentityID, @FullName, @PhoneNumber, @Email, @CostaRicaID, @Street, 1, GETDATE(), @InsertUser, GETDATE(), @InsertUser)
                     END				
 			-- =======================================================
 

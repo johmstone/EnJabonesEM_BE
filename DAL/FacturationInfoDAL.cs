@@ -40,6 +40,7 @@ namespace DAL
                             IdentityID = dr["IdentityID"].ToString(),
                             FullName = dr["FullName"].ToString(),
                             PhoneNumber = Convert.ToInt32(dr["PhoneNumber"]),
+                            Email = dr["Email"].ToString(),
                             CostaRicaID = Convert.ToInt32(dr["CostaRicaID"]),
                             ProvinceID = Convert.ToInt32(dr["ProvinceID"]),
                             Province = dr["Province"].ToString(),
@@ -110,6 +111,7 @@ namespace DAL
                 SqlCmd.Parameters.AddWithValue("@IdentityID", Detail.IdentityID);
                 SqlCmd.Parameters.AddWithValue("@FullName", Detail.FullName);
                 SqlCmd.Parameters.AddWithValue("@PhoneNumber", Detail.PhoneNumber);
+                SqlCmd.Parameters.AddWithValue("@Email", Detail.Email);
                 SqlCmd.Parameters.AddWithValue("@CostaRicaID", Detail.CostaRicaID);
                 SqlCmd.Parameters.AddWithValue("@Street", Detail.Street);
 
