@@ -16,5 +16,10 @@ namespace BL
         {
             return ODAL.SearchStaginOrder(StagingOrderID);
         }
+
+        public bool AddOrder(NewOrder Order)
+        {
+            return ODAL.AddOrder(Order);
+        }
     }
 }

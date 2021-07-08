@@ -17,6 +17,13 @@ namespace ET
         public DateTime OrderDate { get; set; }
     }
 
+    public class NewOrder
+    {
+        public string OrderID { get; set; }
+
+        public string OrderDetails { get; set; }
+    }
+
     public class Order
     {
         [Key]

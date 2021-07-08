@@ -87,7 +87,6 @@
     <Build Include="sal\Tables\utbDeliveryAddresses.sql" />
     <Build Include="sal\Tables\utbDeliveryMethods.sql" />
     <Build Include="sal\Tables\utbFacturationInfo.sql" />
-    <Build Include="sal\Tables\utbOrderDetails.sql" />
     <Build Include="sal\Tables\utbOrders.sql" />
     <Build Include="sal\Tables\utbOrderStatus.sql" />
     <Build Include="sal\Tables\utbProducts.sql" />
@@ -147,6 +146,7 @@
     <Build Include="sal\Tables\utbStagingOrders.sql" />
     <Build Include="sal\Stored Procedures\uspAddStagingOrder.sql" />
     <Build Include="sal\Stored Procedures\uspReadStagingOrder.sql" />
+    <Build Include="sal\Stored Procedures\uspAddOrder.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB_JABONES_CR.publish.xml" />

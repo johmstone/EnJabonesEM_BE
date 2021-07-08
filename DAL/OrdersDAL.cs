@@ -74,5 +74,33 @@ namespace DAL
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             return StageOrder;
         }
+
+        public bool AddOrder(NewOrder Order)
+        {
+            bool rpta;
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[sal].[uspAddOrder]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlCmd.Parameters.AddWithValue("@OrderID", Order.OrderID);
+                SqlCmd.Parameters.AddWithValue("@OrderDetails", Order.OrderDetails);
+
+                //Exec Command
+                SqlCmd.ExecuteNonQuery();
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
     }
 }

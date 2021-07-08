@@ -19,7 +19,7 @@ namespace MasQueJabones_API.Controllers
         [HttpPost]
         [Route("api/Orders/StagingOrders/AddNew")]
         [ResponseType(typeof(string))]
-        public HttpResponseMessage AddNew([FromBody] StagingOrder model)
+        public HttpResponseMessage AddNewStagingOrder([FromBody] StagingOrder model)
         {
             var r = OBL.AddStagingOrder(model);
 
@@ -41,6 +41,24 @@ namespace MasQueJabones_API.Controllers
             var r = OBL.SearchStaginOrder(StagingOrderID);
 
             if (r.StagingOrderID.Length > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/Orders/AddNew")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage AddNew([FromBody] NewOrder newOrder)
+        {
+            var r = OBL.AddOrder(newOrder);
+
+            if (r)
             {
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
