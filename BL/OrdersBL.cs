@@ -1,5 +1,6 @@
 ﻿using ET;
 using DAL;
+using System.Collections.Generic;
 
 namespace BL
 {
@@ -20,6 +21,16 @@ namespace BL
         public bool AddOrder(NewOrder Order)
         {
             return ODAL.AddOrder(Order);
+        }
+
+        public List<Order> OrderList(SearchOrder Details)
+        {
+            return ODAL.OrderList(Details);
+        }
+
+        public Order OrderDetails(string OrderID)
+        {
+            return ODAL.OrderDetail(OrderID);
         }
     }
 }

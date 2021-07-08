@@ -24,12 +24,25 @@ namespace ET
         public string OrderDetails { get; set; }
     }
 
+    public class SearchOrder
+    {
+        public string OrderID { get; set; }
+
+        public int UserID { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+    }
+
     public class Order
     {
         [Key]
-        public int OrderID { get; set; }
+        public string OrderID { get; set; }
 
         public int UserID { get; set; }
+
+        public string FullName { get; set; }
 
         public string OrderType { get; set; }
 
@@ -41,13 +54,25 @@ namespace ET
 
         public int FacturationInfoID { get; set; }
 
+        public string OrderDetails { get; set; }
+
         public decimal Discount { get; set; }
+
+        public decimal TotalCart { get; set; }
+
+        public decimal TotalDelivery { get; set; }
 
         public int StatusID { get; set; }
 
+        public string Status { get; set; }
+
         public string ProofPayment { get; set; }
 
+        public bool OrderVerified { get; set; }
+
         public bool ActiveFlag { get; set; }
+
+        public DateTime InsertDate { get; set; }
 
         public string ActionType { get; set; }
     }

@@ -8,6 +8,7 @@ using ET;
 using BL;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
+using MasQueJabones_API.Filters;
 
 namespace MasQueJabones_API.Controllers
 {
@@ -65,6 +66,41 @@ namespace MasQueJabones_API.Controllers
             else
             {
                 return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/Orders/List")]
+        [ResponseType(typeof(List<Order>))]
+        public HttpResponseMessage OrderList([FromBody] SearchOrder Details)
+        {
+            var r = OBL.OrderList(Details);
+
+            if (r.Count() > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/Orders/{OrderID}")]
+        [ResponseType(typeof(Order))]
+        public HttpResponseMessage OrderDetails(string OrderID)
+        {
+            var r = OBL.OrderDetails(OrderID);
+
+            if (String.IsNullOrEmpty(r.OrderID))
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);                
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
         }
     }
