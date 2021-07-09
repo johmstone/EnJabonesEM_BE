@@ -147,6 +147,7 @@
     <Build Include="sal\Stored Procedures\uspAddStagingOrder.sql" />
     <Build Include="sal\Stored Procedures\uspReadStagingOrder.sql" />
     <Build Include="sal\Stored Procedures\uspAddOrder.sql" />
+    <Build Include="sal\Stored Procedures\uspReadOrders.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB_JABONES_CR.publish.xml" />
