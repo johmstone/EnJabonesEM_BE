@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "ASP.NET Web API Help Page";
+    ViewBag.Title = "MasQueJabones.com Web API's";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -15,7 +15,7 @@
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <header class="help-page">
     <div class="content-wrapper">
-        <div class="float-left">
+        <div class="my-2">
             <h1>@ViewBag.Title</h1>
         </div>
     </div>
@@ -23,9 +23,9 @@
 <div id="body" class="help-page">
     <section class="featured">
         <div class="content-wrapper">
-            <h2>Introduction</h2>
+            <h2>Introducción</h2>
             <p>
-                Provide a general description of your APIs here.
+                En esta sección se proporciona una descripción general de los API's disponibles
             </p>
         </div>
     </section>

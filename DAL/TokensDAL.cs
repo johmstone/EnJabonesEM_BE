@@ -71,8 +71,15 @@ namespace DAL
 
             try
             {
-                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
-                SqlCon.Open();
+                if (SqlCon.State == ConnectionState.Open)
+                {
+                    SqlCon.Close(); 
+                    SqlCon.Open();
+                } 
+                else 
+                {
+                    SqlCon.Open();
+                }
                 var SqlCmd = new SqlCommand("[adm].[uspValidateUserToken]", SqlCon)
                 {
                     CommandType = CommandType.StoredProcedure

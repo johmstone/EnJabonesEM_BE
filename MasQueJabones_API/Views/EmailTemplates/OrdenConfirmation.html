@@ -3,10 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Forgot Password Email</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <title>MasQueJabones - Confirmación de Orden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
     <style>
+        .text-success {
+            color: #28a745 !important;
+        }
+        
         .card-btn-success {
             background-color: rgb(18,129,239);
             text-decoration: none;
@@ -50,25 +53,49 @@
                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                 <tr>
                                     <td align="center">
-                                        <h3>Restablecer Contraseña</h3>
+                                        <img src="https://masquejabones.blob.core.windows.net/images/fa-check-circle.png" alt="MasQueJabones.com" width="90" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center">
-                                        <p>
-                                            Hola {FullName}! Para restablecer su contraseña, utilice el siguiente enlace:
+                                        <h3 class="text-success" style="font-size: 1.5rem;">
+                                            Su pedido fue procesado exitosamente!!!
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <p style="font-size: 1rem; margin-top: 1rem; margin-bottom:0;">
+                                            Gracias por escoger <b className="text-primary">MasQueJabones.com</b>
                                         </p>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center">
-                                        <p>
-                                            <a href="{LinkURL}" target="_blank" style="font-weight: bold;" class="card-btn-success">Restablecer</a>
+                                        <p style="font-size: 1rem; margin-bottom: 1.25rem;">
+                                            Tan pronto como se valide la información de pago, su orden se procesará para su retiro o envío correspondiente.
                                         </p>
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td align="center">
+                                        <a style="font-weight: bold; font-size: 1rem;" class="card-btn-success" title="Ver detalles" href="{LinkURL}" target="_blank">
+                                            Orden #{OrderID}
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="font-size: 1rem;">
                                         <br />
                                         Saludos
                                         <br />

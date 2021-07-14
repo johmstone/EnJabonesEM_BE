@@ -318,7 +318,7 @@ namespace MasQueJabones_API.Controllers
             {
                 FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
                 ToEmail = email,
-                SubjectEmail = "EnJabonesEM - Verificar cuenta",
+                SubjectEmail = "MasQueJabones - Verificar cuenta",
                 BodyEmail = body
             };
 
@@ -353,7 +353,7 @@ namespace MasQueJabones_API.Controllers
             {
                 FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
                 ToEmail = email,
-                SubjectEmail = "EnJabonesEM - Restablecer Contraseña",
+                SubjectEmail = "MasQueJabones - Restablecer Contraseña",
                 BodyEmail = body
             };
 

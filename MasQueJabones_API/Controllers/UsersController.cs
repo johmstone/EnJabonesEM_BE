@@ -122,7 +122,7 @@ namespace MasQueJabones_API.Controllers
                 {
                     FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
                     ToEmail = model.Email,
-                    SubjectEmail = "Su contraseña de EnJabonesEM.com ha sido restablecida",
+                    SubjectEmail = "Su contraseña de MasQueJabones.com ha sido restablecida",
                     BodyEmail = body
                 };
 

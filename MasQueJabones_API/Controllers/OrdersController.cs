@@ -9,6 +9,11 @@ using BL;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using MasQueJabones_API.Filters;
+using System.Configuration;
+using System.IO;
+using System.Web;
+using System.Net.Mail;
+using System.Text;
 
 namespace MasQueJabones_API.Controllers
 {
@@ -61,6 +66,14 @@ namespace MasQueJabones_API.Controllers
 
             if (r)
             {
+                try
+                {
+                    SendOrdenConfirmation(newOrder.OrderID);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
             else
@@ -103,5 +116,41 @@ namespace MasQueJabones_API.Controllers
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
         }
+
+        public void SendOrdenConfirmation(string OrderID)
+        {
+            string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/Order/" + OrderID;
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/OrdenConfirmation.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{OrderID}", OrderID);
+            body = body.Replace("{LinkURL}", LinkURL);
+            //body = body.Replace("{GUID}", Code.GUID);
+
+            Emails Email = new Emails()
+            {
+                FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
+                ToEmail = "Johmstone@gmail.com",
+                SubjectEmail = "MasQueJabones - Confirmación de Orden",
+                BodyEmail = body
+            };
+
+            MailMessage mm = new MailMessage(Email.FromEmail, Email.ToEmail)
+            {
+                Subject = Email.SubjectEmail,
+                Body = Email.BodyEmail,
+                IsBodyHtml = true,
+                BodyEncoding = Encoding.GetEncoding("utf-8")
+            };
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Send(mm);
+
+        }
+
     }
 }
