@@ -14,6 +14,7 @@ using System.IO;
 using System.Web;
 using System.Net.Mail;
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MasQueJabones_API.Controllers
 {
@@ -68,7 +69,7 @@ namespace MasQueJabones_API.Controllers
             {
                 try
                 {
-                    SendOrdenConfirmation(newOrder.OrderID);
+                    SendOrdenConfirmation(newOrder.OrderID, newOrder.EmailNotification);
                 }
                 catch (Exception ex)
                 {
@@ -84,11 +85,55 @@ namespace MasQueJabones_API.Controllers
 
         [HttpPost]
         [ApiKeyAuthentication]
+        [Route("api/Orders/Update")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage Update([FromBody] Order Model)
+        {
+            var authHeader = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            var token = authHeader.Substring("Bearer ".Length);
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(token);
+            var tokenS = handler.ReadToken(token) as JwtSecurityToken;
+
+            var UserName = tokenS.Claims.First(claim => claim.Type == "Email").Value;
+
+            var r = OBL.UpdateOrder(Model, UserName);
+
+            if (r)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
         [Route("api/Orders/List")]
         [ResponseType(typeof(List<Order>))]
         public HttpResponseMessage OrderList([FromBody] SearchOrder Details)
         {
             var r = OBL.OrderList(Details);
+
+            if (r.Count() > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/Orders/Statuses/{StatusType}")]
+        [ResponseType(typeof(List<OrderStatus>))]
+        public HttpResponseMessage Statuses(string StatusType)
+        {
+            var r = OBL.Statuses(StatusType);
 
             if (r.Count() > 0)
             {
@@ -117,7 +162,7 @@ namespace MasQueJabones_API.Controllers
             }
         }
 
-        public void SendOrdenConfirmation(string OrderID)
+        public void SendOrdenConfirmation(string OrderID, string EmailNotification)
         {
             string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/Order/" + OrderID;
             string body = string.Empty;
@@ -134,7 +179,7 @@ namespace MasQueJabones_API.Controllers
             Emails Email = new Emails()
             {
                 FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
-                ToEmail = "Johmstone@gmail.com",
+                ToEmail = EmailNotification,
                 SubjectEmail = "MasQueJabones - Confirmación de Orden",
                 BodyEmail = body
             };

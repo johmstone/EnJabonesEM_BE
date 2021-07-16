@@ -121,7 +121,7 @@ AS
                         ([OrderID],[StageOrderID],[UserID],[OrderType],[OrderDate],[DeliveryID],[DeliveryAddressID],[FacturationInfoID]
                         ,[OrderDetails],[Discount],[TotalCart],[TotalDelivery],[StatusID],[ProofPayment])
                 VALUES  (@OrderID, @StageOrderID, @UserID, @OrderType, @OrderDate, @DeliveryID, @DeliveryAddressID, @FacturationInfoID, 
-                        @OrderDetails, @Discount, @TotalCart, @TotalDelivery,1, @ProofPayment)
+                        @OrderDetails, @Discount, @TotalCart, @TotalDelivery,20200, @ProofPayment)
 			-- =======================================================
 
         IF ( @@trancount > 0

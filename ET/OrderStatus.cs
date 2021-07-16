@@ -7,8 +7,10 @@ namespace ET
         [Key]
         public int StatusID { get; set; }
 
-        public string Status { get; set; }
+        public string InternalStatus { get; set; }
 
-        public string ActionType { get; set; }
+        public int ExternalStatusID { get; set; }
+
+        public string ExternalStatus { get; set; }
     }
 }

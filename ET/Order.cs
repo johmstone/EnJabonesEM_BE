@@ -22,6 +22,8 @@ namespace ET
         public string OrderID { get; set; }
 
         public string OrderDetails { get; set; }
+
+        public string EmailNotification { get; set; }
     }
 
     public class SearchOrder
@@ -64,7 +66,9 @@ namespace ET
 
         public int StatusID { get; set; }
 
-        public string Status { get; set; }
+        public string InternalStatus { get; set; }
+
+        public string ExternalStatus { get; set; }
 
         public string ProofPayment { get; set; }
 
@@ -76,4 +80,5 @@ namespace ET
 
         public string ActionType { get; set; }
     }
+    
 }

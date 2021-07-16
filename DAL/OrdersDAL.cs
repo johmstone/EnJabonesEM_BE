@@ -140,7 +140,8 @@ namespace DAL
                             TotalCart = Convert.ToDecimal(dr["TotalCart"]),
                             TotalDelivery = Convert.ToDecimal(dr["TotalDelivery"]),
                             StatusID = Convert.ToInt32(dr["StatusID"]),
-                            Status = dr["Status"].ToString(),
+                            InternalStatus = dr["InternalStatus"].ToString(),
+                            ExternalStatus = dr["ExternalStatus"].ToString(),
                             ProofPayment = dr["ProofPayment"].ToString(),
                             OrderVerified = Convert.ToBoolean(dr["OrderVerified"]),
                             ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]),
@@ -194,7 +195,8 @@ namespace DAL
                         Details.TotalCart = Convert.ToDecimal(dr["TotalCart"]);
                         Details.TotalDelivery = Convert.ToDecimal(dr["TotalDelivery"]);
                         Details.StatusID = Convert.ToInt32(dr["StatusID"]);
-                        Details.Status = dr["Status"].ToString();
+                        Details.InternalStatus = dr["InternalStatus"].ToString();
+                        Details.ExternalStatus = dr["ExternalStatus"].ToString();
                         Details.ProofPayment = dr["ProofPayment"].ToString();
                         Details.OrderVerified = Convert.ToBoolean(dr["OrderVerified"]);
                         Details.ActiveFlag = Convert.ToBoolean(dr["ActiveFlag"]);
@@ -208,6 +210,75 @@ namespace DAL
             }
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             return Details;
+        }
+
+        public bool UpdateOrder(Order Details, string InsertUser)
+        {
+            bool rpta;
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[sal].[uspUpdateOrder]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                //Insert Parameters
+                SqlCmd.Parameters.AddWithValue("@OrderID", Details.OrderID);
+                SqlCmd.Parameters.AddWithValue("@InsertUser", InsertUser);
+                SqlCmd.Parameters.AddWithValue("@ActionType", Details.ActionType);
+                SqlCmd.Parameters.AddWithValue("@StatusID", Details.StatusID);
+                SqlCmd.Parameters.AddWithValue("@OrderVerified", Details.OrderVerified);
+
+                //Exec Command
+                SqlCmd.ExecuteNonQuery();
+                rpta = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return rpta;
+        }
+
+        public List<OrderStatus> Statuses(string StatusType)
+        {
+            List<OrderStatus> List = new List<OrderStatus>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[sal].[uspReadOrderStatus]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlCmd.Parameters.AddWithValue("@StatusType", StatusType);
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new OrderStatus
+                        {
+                            StatusID = Convert.ToInt32(dr["StatusID"]),
+                            InternalStatus = dr["InternalStatus"].ToString(),
+                            ExternalStatusID = Convert.ToInt32(dr["ExternalStatusID"]),
+                            ExternalStatus = dr["ExternalStatus"].ToString()                            
+                        };
+                        List.Add(detail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
         }
     }
 }

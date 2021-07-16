@@ -23,6 +23,11 @@ namespace BL
             return ODAL.AddOrder(Order);
         }
 
+        public bool UpdateOrder(Order Model, string InsertUser)
+        {
+            return ODAL.UpdateOrder(Model, InsertUser);
+        }
+
         public List<Order> OrderList(SearchOrder Details)
         {
             return ODAL.OrderList(Details);
@@ -31,6 +36,11 @@ namespace BL
         public Order OrderDetails(string OrderID)
         {
             return ODAL.OrderDetail(OrderID);
+        }
+
+        public List<OrderStatus> Statuses(string StatusType)
+        {
+            return ODAL.Statuses(StatusType);
         }
     }
 }

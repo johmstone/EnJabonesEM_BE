@@ -1,12 +1,14 @@
 ﻿CREATE TABLE [sal].[utbOrderStatus]
 (
-	[StatusID]			INT				IDENTITY(1,1) NOT NULL,
-	[Status]			VARCHAR(100)	NOT NULL,
+	[StatusID]			INT				NOT NULL,
+	[InternalStatus]	VARCHAR(100)	NOT NULL,
+	[ExternalStatusID]	INT				NOT NULL,
+	[ExternalStatus]	VARCHAR(100)	NOT NULL,
 	[InsertDate]		DATETIME		CONSTRAINT [utbOrderstatusDefaultInsertDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbOrderstatusDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,
     [LastModifyDate]	DATETIME		CONSTRAINT [utbOrderstatusDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbOrderstatusDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
-	CONSTRAINT [utbStatusID] PRIMARY KEY CLUSTERED ([StatusID] ASC),
+	CONSTRAINT [utbStatusID] PRIMARY KEY CLUSTERED ([StatusID]),
 );
 
 GO
