@@ -33,6 +33,11 @@ namespace BL
             return ODAL.OrderList(Details);
         }
 
+        public List<OrderStatus> OrderSummary(SearchOrder Details)
+        {
+            return ODAL.OrderSummary(Details);
+        }
+
         public Order OrderDetails(string OrderID)
         {
             return ODAL.OrderDetail(OrderID);

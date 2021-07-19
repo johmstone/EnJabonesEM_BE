@@ -15,6 +15,7 @@ using System.Web;
 using System.Net.Mail;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Newtonsoft.Json;
 
 namespace MasQueJabones_API.Controllers
 {
@@ -22,6 +23,7 @@ namespace MasQueJabones_API.Controllers
     public class OrdersController : ApiController
     {
         private OrdersBL OBL = new OrdersBL();
+        private UserBL UBL = new UserBL();
 
         [HttpPost]
         [Route("api/Orders/StagingOrders/AddNew")]
@@ -69,7 +71,15 @@ namespace MasQueJabones_API.Controllers
             {
                 try
                 {
-                    SendOrdenConfirmation(newOrder.OrderID, newOrder.EmailNotification);
+                    SendOrdenConfirmation(newOrder.OrderID, newOrder.EmailNotification);                   
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                try
+                {
+                    SendAdminConfirmation(newOrder);                    
                 }
                 catch (Exception ex)
                 {
@@ -112,12 +122,20 @@ namespace MasQueJabones_API.Controllers
         [HttpPost]
         [ApiKeyAuthentication]
         [Route("api/Orders/List")]
-        [ResponseType(typeof(List<Order>))]
+        [ResponseType(typeof(OrderList))]
         public HttpResponseMessage OrderList([FromBody] SearchOrder Details)
         {
-            var r = OBL.OrderList(Details);
+            if(Details.ExternalStatusID == 10000)
+            {
+                Details.ExternalStatusID = null;
+            }
+            OrderList r = new OrderList()
+            {
+                Orders = OBL.OrderList(Details),
+                Summary = OBL.OrderSummary(Details)
+            };
 
-            if (r.Count() > 0)
+            if (r.Orders.Count() > 0)
             {
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
             }
@@ -162,6 +180,41 @@ namespace MasQueJabones_API.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/Orders/PaidConfirmation")]
+        [ResponseType(typeof(bool))]
+        public HttpResponseMessage PaidConfirmation([FromBody] OrderConfirmationRequestEncrypted EncryptData)
+        {
+            var EncryptRequest = DecryptString(EncryptData.Data);
+
+            var Request = JsonConvert.DeserializeObject<OrderConfirmationRequest>(EncryptRequest);
+
+            if(Request.ApiKey == ConfigurationManager.AppSettings["AdminToken"])
+            {
+                Order NONot = new Order()
+                {
+                    OrderID = Request.OrderID,
+                    ActionType = "VALPAID",
+                    StatusID = 30100,
+                    OrderVerified = true
+                };
+                var r = OBL.UpdateOrder(NONot, Request.Email);
+                
+                if (!r)
+                {
+                    return this.Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+                else
+                {
+                    return this.Request.CreateResponse(HttpStatusCode.OK, r);
+                }
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.Unauthorized);
+            }            
+        }
+
         public void SendOrdenConfirmation(string OrderID, string EmailNotification)
         {
             string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/Order/" + OrderID;
@@ -195,6 +248,130 @@ namespace MasQueJabones_API.Controllers
             SmtpClient smtp = new SmtpClient();
             smtp.Send(mm);
 
+            Order NONot = new Order()
+            {
+                OrderID = OrderID,
+                ActionType = "CHGST",
+                StatusID = 20300,
+                OrderVerified = false
+            };
+
+            var rc = OBL.UpdateOrder(NONot, "SystemUser");
+
+        }
+
+        public void SendAdminConfirmation(NewOrder Details)
+        {
+            
+            string body = string.Empty;
+            bool result = false;
+
+            try {
+                List<string> Admins = UBL.AdminUserList();
+
+                try
+                {
+                    Admins.ForEach(item =>
+                    {
+                        OrderConfirmationRequest request = new OrderConfirmationRequest()
+                        {
+                            ApiKey = ConfigurationManager.AppSettings["AdminToken"],
+                            OrderID = Details.OrderID,
+                            Email = item
+                        };
+
+                        string EncryptCode = EnryptString(JsonConvert.SerializeObject(request));
+
+                        string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/Order/PaidConfirmation/" + EncryptCode + "/" + Details.OrderID;
+
+                        using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/EmailTemplates/AdminOrdenNotification.html")))
+                        {
+                            body = reader.ReadToEnd();
+                        }
+
+                        body = body.Replace("{OrderID}", Details.OrderID);
+                        body = body.Replace("{LinkURL}", LinkURL);
+                        body = body.Replace("{PaymentMethod}", Details.PaymentMethod);
+                        body = body.Replace("{ProofPayment}", Details.ProofPayment);
+
+                        Emails Email = new Emails()
+                        {
+                            FromEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString(),
+                            ToEmail = item,
+                            SubjectEmail = "MasQueJabones - Confirmación de Orden",
+                            BodyEmail = body
+                        };
+
+                        MailMessage mm = new MailMessage(Email.FromEmail, Email.ToEmail)
+                        {
+                            Subject = Email.SubjectEmail,
+                            Body = Email.BodyEmail,
+                            IsBodyHtml = true,
+                            BodyEncoding = Encoding.GetEncoding("utf-8")
+                        };
+
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Send(mm);
+
+                        if (!result)
+                        {
+                            result = true;
+                        }
+                    });                    
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }            
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
+            if(result)
+            {
+                try
+                {
+                    Order NONot = new Order()
+                    {
+                        OrderID = Details.OrderID,
+                        ActionType = "CHGST",
+                        StatusID = 20400,
+                        OrderVerified = false
+                    };
+                    var rc = OBL.UpdateOrder(NONot, "SystemUser");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+        }
+
+        public string DecryptString(string encrString)
+        {
+            byte[] b;
+            string decrypted;
+            try
+            {
+                b = Convert.FromBase64String(encrString);
+                decrypted = ASCIIEncoding.ASCII.GetString(b);
+            }
+            catch (FormatException fe)
+            {
+                Console.WriteLine(fe);
+                decrypted = "";
+            }
+            return decrypted;
+        }
+
+        public string EnryptString(string strEncrypted)
+        {
+            byte[] b = ASCIIEncoding.ASCII.GetBytes(strEncrypted);
+            string encrypted = Convert.ToBase64String(b);
+            return encrypted;
         }
 
     }

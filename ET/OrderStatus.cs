@@ -12,5 +12,7 @@ namespace ET
         public int ExternalStatusID { get; set; }
 
         public string ExternalStatus { get; set; }
+
+        public int QtyOrders { get; set; }
     }
 }

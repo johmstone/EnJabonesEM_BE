@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ET
@@ -24,13 +26,19 @@ namespace ET
         public string OrderDetails { get; set; }
 
         public string EmailNotification { get; set; }
+
+        public string PaymentMethod { get; set; }
+
+        public string ProofPayment { get; set; }
     }
 
     public class SearchOrder
     {
         public string OrderID { get; set; }
 
-        public int UserID { get; set; }
+        public int? UserID { get; set; }
+
+        public int? ExternalStatusID { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -81,4 +89,25 @@ namespace ET
         public string ActionType { get; set; }
     }
     
+    public class OrderList
+    {
+        public List<Order> Orders { get; set; }
+
+        public List<OrderStatus> Summary { get; set; }
+    }
+    public class OrderConfirmationRequest
+    {
+        [JsonProperty("ApiKey")]
+        public string ApiKey { get; set; }
+
+        [JsonProperty("OrderID")]
+        public string OrderID { get; set; }
+
+        [JsonProperty("Email")]
+        public string Email { get; set; }
+    }
+    public class OrderConfirmationRequestEncrypted
+    {
+        public string Data { get; set; }
+    }
 }

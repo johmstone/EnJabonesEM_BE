@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ET
@@ -46,6 +47,10 @@ namespace ET
 
         public string ActionType { get; set; }
 
+        public List<DeliveryAddress> DeliveryAddresses { get; set; }
+
+        public List<FacturatioInfo> FacturatioInfos { get; set; }
+        
     }
 
     public class UserLogin
@@ -66,6 +71,7 @@ namespace ET
         [Display(Name = "Correo Electrónico")]
         public string Email { get; set; }
     }
+    
     public class AuthorizationCode
     {
         public string GUID { get; set; }

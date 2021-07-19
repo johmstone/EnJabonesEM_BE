@@ -63,6 +63,36 @@ namespace DAL
             return List;
         }
 
+        public List<string> AdminUserList()
+        {
+            List<string> List = new List<string>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[adm].[uspReadAdmins]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        List.Add(dr["Email"].ToString());
+                    }
+                }
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
+        }
+
         public bool Update(User User, string InsertUser)
         {
             bool rpta;
@@ -418,7 +448,7 @@ namespace DAL
                         Detail.CreationDate = Convert.ToDateTime(dr["CreationDate"]);
                         Detail.RoleName = dr["RoleName"].ToString();
                     }
-                }
+                }                
             }
             catch (Exception ex)
             {

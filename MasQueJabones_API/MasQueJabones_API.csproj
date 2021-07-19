@@ -261,6 +261,7 @@
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\EmailTemplates\AdminOrdenNotification.html" />
     <Content Include="Views\EmailTemplates\AdminResetPassword.html" />
     <Content Include="Views\EmailTemplates\ForgotPassword.html" />
     <Content Include="Views\EmailTemplates\OrdenConfirmation.html" />

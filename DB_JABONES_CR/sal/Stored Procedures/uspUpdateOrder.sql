@@ -34,7 +34,6 @@ AS
                 END
 
             -- =======================================================
-                DECLARE @ActiveFlag BIT
 				IF(@ActionType = 'CHGST')
                     BEGIN
                         UPDATE  [sal].[utbOrders]
@@ -42,6 +41,13 @@ AS
                                 ,[LastModifyDate]   = GETDATE()
                                 ,[LastModifyUser]   = @InsertUser
                         WHERE   [OrderID]  = @OrderID
+                        
+                        SELECT  @OrderVerified = [OrderVerified]
+                        FROM    [sal].[utbOrders]
+                        WHERE   [OrderID]  = @OrderID
+                        
+                        INSERT INTO [sal].[utbOrdersHistory] ([OrderID],[StatusID],[OrderVerified],[ActivityDate],[InsertUser])
+                        VALUES  (@OrderID,@StatusID,@OrderVerified,GETDATE(),@InsertUser)
                     END
                 ELSE
                     BEGIN
@@ -50,7 +56,10 @@ AS
                                 ,[OrderVerified]    = 1 
                                 ,[LastModifyDate]   = GETDATE()
                                 ,[LastModifyUser]   = @InsertUser
-                        WHERE   [OrderID]  = @OrderID                   
+                        WHERE   [OrderID]  = @OrderID    
+                        
+                        INSERT INTO [sal].[utbOrdersHistory] ([OrderID],[StatusID],[OrderVerified],[ActivityDate],[InsertUser])
+                        VALUES  (@OrderID,30100,1,GETDATE(),@InsertUser)
                     END
 			-- =======================================================
 

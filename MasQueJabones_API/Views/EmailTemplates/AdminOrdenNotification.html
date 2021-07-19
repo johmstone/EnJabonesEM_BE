@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>MasQueJabones - Confirmación de Orden</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        .card-btn-success {
+            background-color: rgb(18,129,239);
+            text-decoration: none;
+            color: black;
+            margin: auto;
+            padding: .8em 3em;
+            -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+            -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+            box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+            border-radius: 25px;
+            -webkit-transition: all .4s ease;
+            -moz-transition: all .4s ease;
+            -o-transition: all .4s ease;
+            transition: all .4s ease;
+        }
+
+            .card-btn-success:hover {
+                -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+                -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+                box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+                color: white;
+                -webkit-transition: all .4s ease;
+                -moz-transition: all .4s ease;
+                -o-transition: all .4s ease;
+                transition: all .4s ease;
+            }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td style="padding: 10px 0 10px 0;">
+                <table align="center" border="1" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; font-family: Poppins, sans-serif;">
+                    <tr>
+                        <td align="center" style="padding: 0;">
+                            <img src="https://masquejabones.blob.core.windows.net/images/EmailHeaders.jpg" alt="Jabones Artesanales" width="600" height="230" style="display: block;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#ffffff" style="padding: 20px 30px 20px 30px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <h3 style="font-size: 1.5rem; color: blue;">
+                                            Una nueva orden fue generada!!!
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <p style="font-size: 1rem; margin-top: 1rem; margin-bottom:0;">
+                                            Una nueva orden se genero a travez de <b className="text-primary">MasQueJabones.com</b>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <p style="font-size: 1rem; margin-bottom: 1.25rem;">
+                                            Por favor valide la Información de Pago y proceda a confirmar!
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <table border="1" style="margin-bottom: 1rem;">
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 1rem; margin: 0.25rem;">
+                                                        OrdenID:
+                                                    </p>
+                                                </td>
+                                                <td align="center">
+                                                    <p style="font-size: 1rem; margin: 0.25rem; color: blue;">
+                                                        {OrderID}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 1rem; margin: 0.25rem;">
+                                                        Método de Pago:
+                                                    </p>
+                                                </td>
+                                                <td align="center">
+                                                    <p style="font-size: 1rem; margin: 0.25rem; color: blue;">
+                                                        {PaymentMethod}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 1rem; margin: 0.25rem;">
+                                                        Comprobante:
+                                                    </p>
+                                                </td>
+                                                <td align="center">
+                                                    <p style="font-size: 1rem; margin: 0.25rem; color: blue;">
+                                                        {ProofPayment}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <a style="font-weight: bold; font-size: 1rem;" class="card-btn-success" title="Ver detalles" href="{LinkURL}" target="_blank">
+                                            Confirmar Información
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="font-size: 1rem;">
+                                        <br />
+                                        Saludos
+                                        <br />
+                                        Equipo de MasQueJabones
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 30px 10px 30px 10px; background-color: #343a40!important; color:white;" align="center">
+                            <p style="margin:0; font-size: 1rem;">
+                                <a href="http://www.createdinstone.com/" target="_blank" style="color: #6c757d!important; font-weight: 700!important;">CreatedIn<span style="color: white;">Stone</span></a> &copy;
+                                <script>document.write(new Date().getFullYear());</script>
+                                Derechos Reservados
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

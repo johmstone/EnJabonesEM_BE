@@ -122,6 +122,9 @@ AS
                         ,[OrderDetails],[Discount],[TotalCart],[TotalDelivery],[StatusID],[ProofPayment])
                 VALUES  (@OrderID, @StageOrderID, @UserID, @OrderType, @OrderDate, @DeliveryID, @DeliveryAddressID, @FacturationInfoID, 
                         @OrderDetails, @Discount, @TotalCart, @TotalDelivery,20200, @ProofPayment)
+
+                INSERT INTO [sal].[utbOrdersHistory] ([OrderID],[StatusID],[OrderVerified])
+                VALUES  (@OrderID,20200,0)
 			-- =======================================================
 
         IF ( @@trancount > 0

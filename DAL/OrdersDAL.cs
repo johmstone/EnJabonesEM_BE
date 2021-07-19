@@ -118,6 +118,7 @@ namespace DAL
                 };
 
                 SqlCmd.Parameters.AddWithValue("@UserID", Details.UserID);
+                SqlCmd.Parameters.AddWithValue("@ExternalStatusID", Details.ExternalStatusID);
                 SqlCmd.Parameters.AddWithValue("@StartDate", Details.StartDate);
                 SqlCmd.Parameters.AddWithValue("@EndDate", Details.EndDate);
 
@@ -159,6 +160,7 @@ namespace DAL
             return List;
         }
 
+        
         public Order OrderDetail(string OrderID)
         {
             Order Details = new Order();
@@ -267,7 +269,49 @@ namespace DAL
                             StatusID = Convert.ToInt32(dr["StatusID"]),
                             InternalStatus = dr["InternalStatus"].ToString(),
                             ExternalStatusID = Convert.ToInt32(dr["ExternalStatusID"]),
-                            ExternalStatus = dr["ExternalStatus"].ToString()                            
+                            ExternalStatus = dr["ExternalStatus"].ToString(),
+                            QtyOrders = Convert.ToInt32(dr["QtyOrders"])
+                        };
+                        List.Add(detail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
+        }
+
+        public List<OrderStatus> OrderSummary(SearchOrder Details)
+        {
+            List<OrderStatus> List = new List<OrderStatus>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[sal].[uspReadOrderSummary]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlCmd.Parameters.AddWithValue("@UserID", Details.UserID);
+                SqlCmd.Parameters.AddWithValue("@StartDate", Details.StartDate);
+                SqlCmd.Parameters.AddWithValue("@EndDate", Details.EndDate);
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new OrderStatus
+                        {
+                            StatusID = Convert.ToInt32(dr["StatusID"]),
+                            InternalStatus = dr["InternalStatus"].ToString(),
+                            ExternalStatusID = Convert.ToInt32(dr["ExternalStatusID"]),
+                            ExternalStatus = dr["ExternalStatus"].ToString(),
+                            QtyOrders = Convert.ToInt32(dr["QtyOrders"])
                         };
                         List.Add(detail);
                     }

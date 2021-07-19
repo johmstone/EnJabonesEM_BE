@@ -17,6 +17,11 @@ namespace BL
             return UDAL.List();
         }
 
+        public List<string> AdminUserList()
+        {
+            return UDAL.AdminUserList();
+        }
+        
         public bool Update(User user, string insertuser)
         {
             return UDAL.Update(user, insertuser);

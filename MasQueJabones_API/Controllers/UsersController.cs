@@ -47,6 +47,9 @@ namespace MasQueJabones_API.Controllers
         {
             var r = UBL.Details(id);
 
+            r.DeliveryAddresses = DBL.List(id);
+            r.FacturatioInfos = FBL.List(id);
+
             if (r.UserID > 0)
             {
                 return this.Request.CreateResponse(HttpStatusCode.OK, r);
