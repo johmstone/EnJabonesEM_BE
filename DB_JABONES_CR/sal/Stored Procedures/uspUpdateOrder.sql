@@ -36,16 +36,24 @@ AS
             -- =======================================================
 				IF(@ActionType = 'CHGST')
                     BEGIN
+                        IF(@StatusID = 30100) /*Pago Confirmado*/
+                            BEGIN
+                                SET @OrderVerified = 1
+                            END
+                        ELSE 
+                            BEGIN
+                                SELECT  @OrderVerified = [OrderVerified]
+                                FROM    [sal].[utbOrders]
+                                WHERE   [OrderID]  = @OrderID
+                            END
+
                         UPDATE  [sal].[utbOrders]
                         SET     [StatusID] = @StatusID
+                                ,[OrderVerified]    = @OrderVerified
                                 ,[LastModifyDate]   = GETDATE()
                                 ,[LastModifyUser]   = @InsertUser
                         WHERE   [OrderID]  = @OrderID
-                        
-                        SELECT  @OrderVerified = [OrderVerified]
-                        FROM    [sal].[utbOrders]
-                        WHERE   [OrderID]  = @OrderID
-                        
+
                         INSERT INTO [sal].[utbOrdersHistory] ([OrderID],[StatusID],[OrderVerified],[ActivityDate],[InsertUser])
                         VALUES  (@OrderID,@StatusID,@OrderVerified,GETDATE(),@InsertUser)
                     END
