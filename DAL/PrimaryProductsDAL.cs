@@ -230,6 +230,7 @@ namespace DAL
                 SqlCmd.Parameters.AddWithValue("@PhotoURL", Detail.PhotoURL);
                 SqlCmd.Parameters.AddWithValue("@BrochureURL", Detail.BrochureURL);
                 SqlCmd.Parameters.AddWithValue("@VisibleFlag", Detail.VisibleFlag);
+                SqlCmd.Parameters.AddWithValue("@Properties", Detail.StrProperties);
 
                 //Exec Command
                 SqlCmd.ExecuteNonQuery();

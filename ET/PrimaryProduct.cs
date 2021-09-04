@@ -25,6 +25,9 @@ namespace ET
         [JsonProperty("BrochureURL")]
         public string BrochureURL { get; set; }
 
+        [JsonProperty("StrProperties")]
+        public string StrProperties { get; set; }
+
         [JsonProperty("ActiveFlag")]
         public bool ActiveFlag { get; set; }
 
@@ -39,5 +42,10 @@ namespace ET
 
         [JsonProperty("Formula")]
         public List<Formula> Formula { get; set; }
+
+        [JsonProperty("Properties")]
+        public List<Property> Properties { get; set; }
     }
+
+    
 }

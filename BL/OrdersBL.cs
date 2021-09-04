@@ -47,5 +47,10 @@ namespace BL
         {
             return ODAL.Statuses(StatusType);
         }
+
+        public List<OrderHistory> OrderHistory(OrderHistoryRequest Model)
+        {
+            return ODAL.OrderHistory(Model);
+        }
     }
 }

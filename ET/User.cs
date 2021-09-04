@@ -50,6 +50,8 @@ namespace ET
         public List<DeliveryAddress> DeliveryAddresses { get; set; }
 
         public List<FacturatioInfo> FacturatioInfos { get; set; }
+
+        public List<Order> OrderList { get; set; }
         
     }
 

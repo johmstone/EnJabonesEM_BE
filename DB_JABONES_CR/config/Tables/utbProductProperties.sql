@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [config].[utbProductProperties]
 (
-	[IngPropertyID]		INT				IDENTITY(1,1) NOT NULL,
+	[ProductPropertyID]	INT				IDENTITY(1,1) NOT NULL,
 	[PrimaryProductID]	INT				NOT NULL,
 	[PropertyID]		INT				NOT NULL,
 	[ActiveFlag]		BIT				CONSTRAINT [utbProductPropertiesDefaultActiveFlagTrue] DEFAULT ((1)) NOT NULL,	
@@ -8,7 +8,7 @@
     [InsertUser]		VARCHAR (100)	CONSTRAINT [utbProductPropertiesDefaultInsertUserSuser_sSame] DEFAULT (suser_sname()) NOT NULL,
     [LastModifyDate]	DATETIME		CONSTRAINT [utbProductPropertiesDefaultLastModifyDateSysDateTime] DEFAULT (sysdatetime()) NOT NULL,
     [LastModifyUser]	VARCHAR (100)	CONSTRAINT [utbProductPropertiesDefaultLastModifyUserSuser_Sname] DEFAULT (suser_sname()) NOT NULL,
-	CONSTRAINT [utbIngPropertyID] PRIMARY KEY CLUSTERED ([IngPropertyID] ASC),
+	CONSTRAINT [utbProductPropertyID] PRIMARY KEY CLUSTERED ([ProductPropertyID] ASC),
 	CONSTRAINT [FK.config.utbPrimaryProducts.config.utbProductProperties.IngredientID] FOREIGN KEY ([PrimaryProductID]) REFERENCES [config].[utbPrimaryProducts] ([PrimaryProductID]),
 	CONSTRAINT [FK.config.utbProperties.config.utbProductProperties.PropertyID] FOREIGN KEY ([PropertyID]) REFERENCES [config].[utbProperties] ([PropertyID])
 );

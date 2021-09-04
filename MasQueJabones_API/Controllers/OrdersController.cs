@@ -215,6 +215,24 @@ namespace MasQueJabones_API.Controllers
             }            
         }
 
+        [HttpPost]
+        [ApiKeyAuthentication]
+        [Route("api/Orders/History")]
+        [ResponseType(typeof(List<OrderHistory>))]
+        public HttpResponseMessage History([FromBody] OrderHistoryRequest Model)
+        {
+            var r = OBL.OrderHistory(Model);
+
+            if (r.Count() > 0)
+            {
+                return this.Request.CreateResponse(HttpStatusCode.OK, r);
+            }
+            else
+            {
+                return this.Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
         public void SendOrdenConfirmation(string OrderID, string EmailNotification)
         {
             string LinkURL = ConfigurationManager.AppSettings["FrontEnd_URL"] + "/Order/" + OrderID;

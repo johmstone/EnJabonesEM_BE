@@ -24,6 +24,7 @@ namespace MasQueJabones_API.Controllers
         private UserBL UBL = new UserBL();
         private DeliveryAddressBL DBL = new DeliveryAddressBL();
         private FacturationInfoBL FBL = new FacturationInfoBL();
+        private OrdersBL OBL = new OrdersBL();
 
         [HttpPost]
         [ResponseType(typeof(List<User>))]
@@ -49,6 +50,15 @@ namespace MasQueJabones_API.Controllers
 
             r.DeliveryAddresses = DBL.List(id);
             r.FacturatioInfos = FBL.List(id);
+            SearchOrder SO = new SearchOrder()
+            {
+                UserID = id,
+                OrderID = null,
+                StartDate = null,
+                EndDate = null,
+                ExternalStatusID = null
+            };
+            r.OrderList = OBL.OrderList(SO);            
 
             if (r.UserID > 0)
             {

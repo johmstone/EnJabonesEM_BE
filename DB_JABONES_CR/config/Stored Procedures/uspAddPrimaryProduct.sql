@@ -17,6 +17,7 @@ CREATE PROCEDURE [config].[uspAddPrimaryProduct]
     @Technique      VARCHAR(100) = NULL,
     @PhotoURL       VARCHAR(500),
     @BrochureURL    VARCHAR(500) = NULL,
+    @Properties     VARCHAR(500) = NULL,
     @VisibleFlag    BIT = NULL
 AS 
     BEGIN
@@ -36,8 +37,37 @@ AS
                 END
 
             -- =======================================================
+                DECLARE @PrimaryProductID   INT,
+                        @PropertyID         INT
+                DECLARE @TableProperties    TABLE ([PrimaryProductID] INT,[PropertyID] INT)
+
                 INSERT INTO	[config].[utbPrimaryProducts] ([Name],[Description],[Technique],[PhotoURL],[BrochureURL],[VisibleFlag],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
                 VALUES (@Name, @Description, @Technique, @PhotoURL, @BrochureURL, ISNULL(@VisibleFlag,0), GETDATE(), @InsertUser, GETDATE(), @InsertUser)                
+
+                IF(@Properties IS NOT NULL)
+                    BEGIN
+                        SET @PrimaryProductID = SCOPE_IDENTITY()
+
+                        INSERT INTO @TableProperties
+                        SELECT	@PrimaryProductID, Value
+                        FROM	STRING_SPLIT(@Properties,',')
+
+                        DECLARE ActionProcess CURSOR FOR 
+                        SELECT * FROM @TableProperties
+
+                        OPEN ActionProcess
+                        FETCH NEXT FROM ActionProcess INTO @PrimaryProductID, @PropertyID
+
+                        WHILE @@FETCH_STATUS = 0
+	                        BEGIN 
+		                        INSERT INTO [config].[utbProductProperties] ([PrimaryProductID],[PropertyID],[InsertDate],[InsertUser],[LastModifyDate],[LastModifyUser])
+		                        VALUES (@PrimaryProductID, @PropertyID, GETDATE(), @InsertUser, GETDATE(), @InsertUser)
+		                        FETCH NEXT FROM ActionProcess INTO @PrimaryProductID, @PropertyID
+	                        END
+
+                        CLOSE ActionProcess
+                        DEALLOCATE ActionProcess
+                    END
 			-- =======================================================
 
         IF ( @@trancount > 0

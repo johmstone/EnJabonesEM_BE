@@ -324,5 +324,47 @@ namespace DAL
             if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
             return List;
         }
+
+        public List<OrderHistory> OrderHistory(OrderHistoryRequest Model)
+        {
+            List<OrderHistory> List = new List<OrderHistory>();
+
+            try
+            {
+                if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+                SqlCon.Open();
+                var SqlCmd = new SqlCommand("[sal].[uspReadOrderHistory]", SqlCon)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                SqlCmd.Parameters.AddWithValue("@OrderID", Model.OrderID);
+                SqlCmd.Parameters.AddWithValue("@ActivityType", Model.ActivityType);
+
+                using (var dr = SqlCmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var detail = new OrderHistory
+                        {
+                            StatusID = Convert.ToInt32(dr["StatusID"]),
+                            InternalStatus = dr["InternalStatus"].ToString(),
+                            ExternalStatusID = Convert.ToInt32(dr["ExternalStatusID"]),
+                            ExternalStatus = dr["ExternalStatus"].ToString(),
+                            OrderVerified = Convert.ToBoolean(dr["OrderVerified"]),
+                            ActivityDate = Convert.ToDateTime(dr["ActivityDate"]),
+                            InsertUser = dr["InsertUser"].ToString()
+                        };
+                        List.Add(detail);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            if (SqlCon.State == ConnectionState.Open) SqlCon.Close();
+            return List;
+        }
     }
 }

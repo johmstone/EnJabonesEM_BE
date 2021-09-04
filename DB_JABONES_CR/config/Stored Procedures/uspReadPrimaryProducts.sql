@@ -29,23 +29,36 @@ AS
 						,PrimaryProducts.[BrochureURL]
 						,PrimaryProducts.[ActiveFlag]
 						,PrimaryProducts.[VisibleFlag]
-						,Products.*
-				FROM	[config].[utbPrimaryProducts] PrimaryProducts
-						OUTER APPLY (SELECT P.[ProductID]
-											,P.[PrimaryProductID]
-											,P.[Qty]
-											,P.[UnitID]
-											,P.[Price]
-											,P.[IVA]
-											,P.[Discount]
-											,P.[ActiveFlag]
-											,P.[VisibleFlag]
-											,U.[UnitName]
-											,U.[Symbol]
-									 FROM	[sal].[utbProducts] P
-											LEFT JOIN [config].[utbUnits] U ON U.[UnitID] = P.[UnitID]
-									 WHERE	P.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]) Products						
-						
+						,(SELECT	P.[ProductID]
+									,P.[PrimaryProductID]
+									,P.[Qty]
+									,P.[UnitID]
+									,P.[Price]
+									,P.[IVA]
+									,P.[Discount]
+									,P.[ActiveFlag]
+									,P.[VisibleFlag]
+									,U.[UnitName]
+									,U.[Symbol]
+						  FROM		[sal].[utbProducts] P
+									LEFT JOIN [config].[utbUnits] U ON U.[UnitID] = P.[UnitID]
+						  WHERE		P.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]
+						  FOR JSON PATH) AS Products
+						,(SELECT	PP.[ProductPropertyID]
+									,P.[PropertyID]
+									,P.[PropertyName]
+						  FROM		[config].[utbProductProperties] PP
+									LEFT JOIN [config].[utbProperties] P ON PP.[PropertyID] = P.[PropertyID]
+						  WHERE		PP.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]
+									AND PP.[ActiveFlag] = 1
+						  FOR JSON PATH) AS Properties
+						,ISNULL(STUFF((SELECT	',' + P.[PropertyName] 
+									   FROM		[config].[utbProductProperties] PP
+												LEFT JOIN [config].[utbProperties] P ON PP.[PropertyID] = P.[PropertyID]
+									   WHERE	PP.[PrimaryProductID] = PrimaryProducts.[PrimaryProductID]
+												AND PP.[ActiveFlag] = 1
+									   FOR XML PATH('')), 1, 1, ''),'') AS StrProperties
+				FROM	[config].[utbPrimaryProducts] PrimaryProducts			
 				WHERE	PrimaryProducts.[PrimaryProductID] = ISNULL(@PrimaryProductID,PrimaryProducts.[PrimaryProductID])
 				FOR JSON AUTO
 			-- =======================================================

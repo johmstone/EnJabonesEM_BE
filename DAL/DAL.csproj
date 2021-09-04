@@ -52,6 +52,7 @@
     <Compile Include="OrdersDAL.cs" />
     <Compile Include="PrimaryProductsDAL.cs" />
     <Compile Include="ProductsDAL.cs" />
+    <Compile Include="PropertiesDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightsDAL.cs" />
     <Compile Include="RolesDAL.cs" />

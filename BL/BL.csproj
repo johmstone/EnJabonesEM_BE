@@ -51,6 +51,7 @@
     <Compile Include="OrdersBL.cs" />
     <Compile Include="PrimaryProductsBL.cs" />
     <Compile Include="ProductsBL.cs" />
+    <Compile Include="PropertiesBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightsBL.cs" />
     <Compile Include="RolesBL.cs" />

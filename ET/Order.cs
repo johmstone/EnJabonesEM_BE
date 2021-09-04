@@ -40,9 +40,9 @@ namespace ET
 
         public int? ExternalStatusID { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
     public class Order
@@ -109,5 +109,29 @@ namespace ET
     public class OrderConfirmationRequestEncrypted
     {
         public string Data { get; set; }
+    }
+
+    public class OrderHistory
+    {
+        public int StatusID { get; set; }
+
+        public string InternalStatus { get; set; }
+
+        public int ExternalStatusID { get; set; }
+
+        public string ExternalStatus { get; set; }
+
+        public bool OrderVerified { get; set; }
+
+        public DateTime ActivityDate { get; set; }
+
+        public string InsertUser { get; set; }
+    }
+
+    public class OrderHistoryRequest
+    {
+        public string OrderID { get; set; }
+
+        public string ActivityType { get; set; }
     }
 }
