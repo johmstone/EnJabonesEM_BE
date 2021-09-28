@@ -10,6 +10,10 @@ namespace ET
     {
         public int CostaRicaID { get; set; }
 
+        public int ProvinceID { get; set; }
+
+        public int CantonID { get; set; }
+
         public int DistrictID { get; set; }
 
         public string District { get; set; }
@@ -19,6 +23,8 @@ namespace ET
 
     public class CostaRicaCantons
     {
+        public int ProvinceID { get; set; }
+
         public int CantonID { get; set; }
 
         public string Canton { get; set; }

@@ -29,22 +29,22 @@ namespace MasQueJabones_API.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/CostaRica/Provinces/{ProvinceID}")]
+        [Route("api/CostaRica/Cantons")]
         [ResponseType(typeof(List<CostaRicaCantons>))]
-        public HttpResponseMessage Cantons(int ProvinceID)
+        public HttpResponseMessage Cantons()
         {
-            var r = CRBL.Cantons(ProvinceID);
+            var r = CRBL.Cantons();
 
             return this.Request.CreateResponse(HttpStatusCode.OK, r);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [Route("api/CostaRica/Provinces/{ProvinceID}/Canton/{CantonID}")]
+        [Route("api/CostaRica/Districts")]
         [ResponseType(typeof(List<CostaRicaDistrics>))]
-        public HttpResponseMessage Distrinc(int ProvinceID, int CantonID)
+        public HttpResponseMessage Distrinc()
         {
-            var r = CRBL.Districts(CantonID,ProvinceID);
+            var r = CRBL.Districts();
 
             return this.Request.CreateResponse(HttpStatusCode.OK, r);
         }

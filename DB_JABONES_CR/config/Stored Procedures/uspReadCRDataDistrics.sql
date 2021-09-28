@@ -11,8 +11,6 @@
 -- ======================================================================
 
 CREATE PROCEDURE [config].[uspReadCRDataDistrics]
-    @ProvinceID INT
-    ,@CantonID  INT
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -23,12 +21,12 @@ AS
 
             -- =======================================================
 				SELECT	[CostaRicaID]
+                        ,[ProvinceID]
+                        ,[CantonID]
 		                ,[DistrictID]
 		                ,[District]
                         ,[GAMFlag]
                 FROM	[config].[utbCostaRicaData]
-                WHERE	[ProvinceID] = @ProvinceID
-		                AND [CantonID] = @CantonID
 			-- =======================================================
 
         END TRY

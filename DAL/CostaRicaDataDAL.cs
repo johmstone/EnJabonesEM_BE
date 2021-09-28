@@ -12,7 +12,7 @@ namespace DAL
 
         private SqlConnection SqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DB_Connection"].ToString());
 
-        public List<CostaRicaDistrics> Districts(int CantonID, int ProvinceID)
+        public List<CostaRicaDistrics> Districts()
         {
             List<CostaRicaDistrics> List = new List<CostaRicaDistrics>();
 
@@ -25,9 +25,6 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
-                SqlCmd.Parameters.AddWithValue("@CantonID", CantonID);
-                SqlCmd.Parameters.AddWithValue("@ProvinceID", ProvinceID);
-
                 using (var dr = SqlCmd.ExecuteReader())
                 {
                     while (dr.Read())
@@ -35,6 +32,8 @@ namespace DAL
                         var detail = new CostaRicaDistrics
                         {
                             CostaRicaID = Convert.ToInt32(dr["CostaRicaID"]),
+                            ProvinceID = Convert.ToInt32(dr["ProvinceID"]),
+                            CantonID = Convert.ToInt32(dr["CantonID"]),
                             DistrictID = Convert.ToInt32(dr["DistrictID"]),
                             District = dr["District"].ToString(),
                             GAMFlag = Convert.ToBoolean(dr["GAMFlag"])
@@ -51,7 +50,7 @@ namespace DAL
             return List;
         }
 
-        public List<CostaRicaCantons> Cantons(int ProvinceID)
+        public List<CostaRicaCantons> Cantons()
         {
             List<CostaRicaCantons> newList = new List<CostaRicaCantons>();
 
@@ -64,14 +63,13 @@ namespace DAL
                     CommandType = CommandType.StoredProcedure
                 };
 
-                SqlCmd.Parameters.AddWithValue("@ProvinceID", ProvinceID);
-
                 using (var dr = SqlCmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
                         var detail = new CostaRicaCantons
                         {
+                            ProvinceID = Convert.ToInt32(dr["ProvinceID"]),
                             CantonID = Convert.ToInt32(dr["CantonID"]),
                             Canton = dr["Canton"].ToString()
                         };

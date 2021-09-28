@@ -101,17 +101,17 @@ AS
 	                        ,FIStreet           VARCHAR(MAX)'$.FacturationInfo.Street'
 		                )
                 
-                IF(@UserID = 0)
+                IF(@UserID = 0 OR @FacturationInfoID = 0)
                     BEGIN
-                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[Email],[CostaRicaID],[Street])
-                        VALUES (@UserID, @FIIdentityType, @FIIdentityID, @FIFullName, @FIPhoneNumber, @FIEmail, @FICostaRicaID, @FIStreet)
+                        INSERT INTO	[sal].[utbFacturationInfo] ([UserID],[IdentityType],[IdentityID],[FullName],[PhoneNumber],[Email],[CostaRicaID],[Street], [PrimaryFlag])
+                        VALUES (@UserID, @FIIdentityType, @FIIdentityID, @FIFullName, @FIPhoneNumber, @FIEmail, @FICostaRicaID, @FIStreet,1)
 
                         SET @FacturationInfoID = SCOPE_IDENTITY()
 
                         IF(@DeliveryID != 1)
                             BEGIN
-                                INSERT INTO	[sal].[utbDeliveryAddresses] ([UserID],[ContactName],[PhoneNumber],[CostaRicaID],[Street])
-                                VALUES (@UserID, @DAContactName, @DAPhoneNumber, @DACostaRicaID, @DAStreet)
+                                INSERT INTO	[sal].[utbDeliveryAddresses] ([UserID],[ContactName],[PhoneNumber],[CostaRicaID],[Street],[PrimaryFlag])
+                                VALUES (@UserID, @DAContactName, @DAPhoneNumber, @DACostaRicaID, @DAStreet,1)
 
                                 SET @DeliveryAddressID = SCOPE_IDENTITY()
                             END

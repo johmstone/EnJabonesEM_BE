@@ -11,7 +11,6 @@
 -- ======================================================================
 
 CREATE PROCEDURE [config].[uspReadCRDataCantons]
-    @ProvinceID INT
 AS 
     BEGIN
         SET NOCOUNT ON
@@ -22,10 +21,10 @@ AS
 
             -- =======================================================
 				SELECT	DISTINCT
-		                [CantonID]
+                        [ProvinceID]
+		                ,[CantonID]
 		                ,[Canton]
                 FROM	[config].[utbCostaRicaData]
-                WHERE	[ProvinceID] = @ProvinceID
 			-- =======================================================
 
         END TRY

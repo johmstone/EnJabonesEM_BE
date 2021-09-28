@@ -12,13 +12,13 @@ namespace BL
         {
             return CRDAL.Provinces();
         }
-        public List<CostaRicaCantons> Cantons(int ProvinceID)
+        public List<CostaRicaCantons> Cantons()
         {
-            return CRDAL.Cantons(ProvinceID);
+            return CRDAL.Cantons();
         }
-        public List<CostaRicaDistrics> Districts(int CantonID, int ProvinceID)
+        public List<CostaRicaDistrics> Districts()
         {
-            return CRDAL.Districts(CantonID, ProvinceID);
+            return CRDAL.Districts();
         }
     }
 }
