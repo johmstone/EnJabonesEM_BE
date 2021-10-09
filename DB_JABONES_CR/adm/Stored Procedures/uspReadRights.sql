@@ -21,19 +21,19 @@ AS
             DECLARE @lErrorState INT
 
             -- =======================================================
-				SELECT	W.[WebID]
-                        ,W.[AppID]
-						,[RoleID]		= @RoleID
-						,W.[DisplayName]
-						,[RightID]		= ISNULL(RR.[RightID],0)
-						,[ReadRight]	= CONVERT(BIT,ISNULL(RR.[Read],0))
-						,[WriteRight]	= CONVERT(BIT,ISNULL(RR.[Write],0))
-				FROM	[adm].[utbWebDirectory] W
-						LEFT JOIN [adm].[utbRightsbyRole] RR ON RR.[WebID] = W.[WebID] 
+                SELECT	W.[WebID]
+		                ,W.[AppID]
+		                ,R.[RoleID]
+		                ,W.[DisplayName]
+		                ,[RightID]		= ISNULL(RR.[RightID],0)
+		                ,[ReadRight]	= CONVERT(BIT,ISNULL(RR.[Read],0))
+		                ,[WriteRight]	= CONVERT(BIT,ISNULL(RR.[Write],0))
+                FROM	[adm].[utbRoles] R
+		                JOIN [adm].[utbWebDirectory] W ON W.[ActiveFlag] = 1
+		                LEFT JOIN [adm].[utbRightsbyRole] RR ON RR.[WebID] = W.[WebID] 
 																AND RR.[ActiveFlag] = 1
-																AND RR.[RoleID] = @RoleID
-				WHERE	W.[ActiveFlag] = 1
-                ORDER BY W.[AppID], W.[Order]
+                                                                AND RR.[RoleID] = @RoleID
+                WHERE	R.[RoleID] = @RoleID
 			-- =======================================================
 
         END TRY
